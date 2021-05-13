@@ -1,0 +1,13 @@
+{
+  "name": "libfire",
+  "version-string": "1.0.0",
+  "description": "Papyrus extensions for LibFire",
+  "homepage": "https://github.com/fireundubh/LibFire",
+  "license": "MIT",
+  "dependencies": [
+    "boost-atomic",
+    "boost-stl-interfaces",
+    "span-lite",
+    "spdlog"
+  ]
+}
