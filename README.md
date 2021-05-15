@@ -26,6 +26,9 @@ Bool Function ActorIsInFaction(Actor akActor, Faction akFaction) Global Native
 ; Returns whether `akActor` is a summoned actor
 Bool Function ActorIsSummoned(Actor akActor) Global Native
 
+; Returns an array of commanded actors for `akActor` or `None`
+Actor[] Function GetCommandedActors(Actor akActor) Global Native
+
 ; Returns the commanding actor for `akActor` when actor is commanded
 Actor Function GetCommandingActor(Actor akActor) Global Native
 

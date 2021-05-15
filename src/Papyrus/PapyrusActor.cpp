@@ -176,10 +176,37 @@ namespace PapyrusActor
 		return a_actor->IsSummoned();
 	}
 
+	auto GetCommandedActors(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor) -> std::vector<RE::Actor*>
+	{
+		std::vector<RE::Actor*> result;
+
+		if (!a_actor) {
+			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
+			return result;
+		}
+
+		if (const auto currentProcess = a_actor->currentProcess; currentProcess) {
+			if (const auto middleProcess = currentProcess->middleHigh; middleProcess) {
+				if (const auto commandedActors = middleProcess->commandedActors; !commandedActors.empty()) {
+					for (const auto& commandedActorData : commandedActors) {
+						if (const auto commandedActorHandle = commandedActorData.commandedActor; commandedActorHandle) {
+							const auto commandedActorPtr = commandedActorHandle.get();
+							const auto commandedActor = commandedActorPtr.get();
+
+							result.push_back(commandedActor);
+						}
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
 	auto GetCommandingActor(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor) -> RE::Actor*
 	{
 		if (!a_actor) {
-			a_vm->TraceStack("akCommandedActor cannot be None", a_stackID, Severity::kInfo);
+			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
 			return nullptr;
 		}
 
@@ -247,6 +274,8 @@ namespace PapyrusActor
 		a_vm->RegisterFunction("ActorIsInAnyFaction", PROJECT_NAME, ActorIsInAnyFaction);
 		a_vm->RegisterFunction("ActorIsInFaction", PROJECT_NAME, ActorIsInFaction);
 		a_vm->RegisterFunction("ActorIsSummoned", PROJECT_NAME, ActorIsSummoned);
+//		a_vm->RegisterFunction("FindActorsInRange", PROJECT_NAME, FindActorsInRange);
+		a_vm->RegisterFunction("GetCommandedActors", PROJECT_NAME, GetCommandedActors);
 		a_vm->RegisterFunction("GetCommandingActor", PROJECT_NAME, GetCommandingActor);
 		a_vm->RegisterFunction("GetWornEquipmentInSlots", PROJECT_NAME, GetWornEquipmentInSlots);
 
