@@ -29,6 +29,9 @@ Actor[] Function GetCommandedActors(Actor akActor) Global Native
 ; Returns the commanding actor for `akActor` when actor is commanded
 Actor Function GetCommandingActor(Actor akActor) Global Native
 
+; Returns the ammo currently used by `akActor`
+Ammo Function GetEquippedAmmo(Actor akActor) Global Native
+
 ; Returns armor items equipped in each slot in `argArmorSlots` (can be empty), and each weapon equipped in either hand
 ; when `abLeftWeapon` or `abRightWeapon` are True (Note: Return values are in array order and can be None)
 Form[] Function GetWornEquipmentInSlots(Actor akActor, Int[] argArmorSlots, Bool abWeaponL, Bool abWeaponR) Global Native

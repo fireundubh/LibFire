@@ -224,6 +224,16 @@ namespace PapyrusActor
 		return nullptr;
 	}
 
+	auto GetEquippedAmmo(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor) -> RE::TESAmmo*
+	{
+		if (!a_actor) {
+			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
+			return nullptr;
+		}
+
+		return a_actor->GetCurrentAmmo();
+	}
+
 	auto GetWornEquipmentInSlots(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor, const std::vector<int32_t> a_slots, bool a_leftWeapon, bool a_rightWeapon) -> std::vector<RE::TESForm*>
 	{
 		std::vector<RE::TESForm*> vec;
@@ -274,9 +284,9 @@ namespace PapyrusActor
 		a_vm->RegisterFunction("ActorIsInAnyFaction", PROJECT_NAME, ActorIsInAnyFaction);
 		a_vm->RegisterFunction("ActorIsInFaction", PROJECT_NAME, ActorIsInFaction);
 		a_vm->RegisterFunction("ActorIsSummoned", PROJECT_NAME, ActorIsSummoned);
-//		a_vm->RegisterFunction("FindActorsInRange", PROJECT_NAME, FindActorsInRange);
 		a_vm->RegisterFunction("GetCommandedActors", PROJECT_NAME, GetCommandedActors);
 		a_vm->RegisterFunction("GetCommandingActor", PROJECT_NAME, GetCommandingActor);
+		a_vm->RegisterFunction("GetEquippedAmmo", PROJECT_NAME, GetEquippedAmmo);
 		a_vm->RegisterFunction("GetWornEquipmentInSlots", PROJECT_NAME, GetWornEquipmentInSlots);
 
 		return true;
