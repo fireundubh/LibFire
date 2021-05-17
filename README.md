@@ -60,6 +60,25 @@ Bool[] Function SearchListForForms(FormList akHaystack, Form[] argNeedles) Globa
 Bool[] Function SearchListsForForm(FormList akHaystack, Form akNeedle) Global Native
 ```
 
+## ObjectReference Functions
+
+```papyrus
+; Returns actors in loaded cells within `afRadius` of `akOrigin`
+Actor[] Function FindNearbyActors(ObjectReference akOrigin, Float afRadius) Global Native
+
+; Returns commanded actors in loaded cells within `afRadius` of `akOrigin` who are controlled by `akOrigin`
+Actor[] Function FindNearbyCommandedActors(ObjectReference akOrigin, Float afRadius) Global Native
+
+; Returns teammates and player-controlled commanded/summoned actors in loaded cells within `afRadius` of player
+Actor[] Function FindNearbyFollowers(Float afRadius) Global Native
+
+; Returns summoned actors in loaded cells within `afRadius` of `akOrigin`
+Actor[] Function FindNearbySummons(ObjectReference akOrigin, Float afRadius) Global Native
+
+; Returns teammates in loaded cells within `afRadius` of player
+Actor[] Function FindNearbyTeammates(Float afRadius) Global Native
+```
+
 ## String Functions
 
 ```papyrus
