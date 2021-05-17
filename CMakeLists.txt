@@ -127,6 +127,7 @@ set(headers
         src/Papyrus/PapyrusActor.h
         src/Papyrus/PapyrusFaction.h
         src/Papyrus/PapyrusFormList.h
+        src/Papyrus/PapyrusObjectREFR.h
         src/Papyrus/PapyrusString.h
         src/Papyrus/PapyrusTime.h
 )
@@ -138,6 +139,7 @@ set(sources
         src/Papyrus/PapyrusActor.cpp
         src/Papyrus/PapyrusFaction.cpp
         src/Papyrus/PapyrusFormList.cpp
+        src/Papyrus/PapyrusObjectREFR.cpp
         src/Papyrus/PapyrusString.cpp
         src/Papyrus/PapyrusTime.cpp
 )
