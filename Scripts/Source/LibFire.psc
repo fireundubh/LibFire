@@ -57,6 +57,9 @@ Bool[] Function SearchListsForForm(FormList akHaystack, Form akNeedle) Global Na
 ; Returns actors in loaded cells within `afRadius` of `akOrigin`
 Actor[] Function FindNearbyActors(ObjectReference akOrigin, Float afRadius) Global Native
 
+; Returns books in loaded cells within `afRadius` of `akOrigin`
+ObjectReference[] Function FindNearbyBooks(ObjectReference akOrigin, Float afRadius) Global Native
+
 ; Returns commanded actors in loaded cells within `afRadius` of `akOrigin` who are controlled by `akOrigin`
 Actor[] Function FindNearbyCommandedActors(ObjectReference akOrigin, Float afRadius) Global Native
 
@@ -68,6 +71,11 @@ Actor[] Function FindNearbySummons(ObjectReference akOrigin, Float afRadius) Glo
 
 ; Returns teammates in loaded cells within `afRadius` of player
 Actor[] Function FindNearbyTeammates(Float afRadius) Global Native
+
+; Attempts to affix full name of `akMessage` to display name for `akRef`, and returns whether operation was successful
+;   If `abPrepend` is True, the message name will be prepended. If False, the name will be appended.
+;   If `abForce` is True, display names set by quest aliases will be overridden.
+Bool Function TryAffixDisplayName(ObjectReference akRef, Message akMessage, Bool abPrepend, Bool abForce) Global Native
 
 { String }
 

@@ -17,5 +17,4 @@ namespace PapyrusString
 	auto WrapString(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::BSFixedString a_source, std::int32_t a_max_length) -> RE::BSFixedString;
 
 	auto RegisterFuncs(VM* a_vm) -> bool;
-
 }
