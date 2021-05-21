@@ -234,7 +234,7 @@ namespace PapyrusActor
 		return a_actor->GetCurrentAmmo();
 	}
 
-	auto GetWornEquipmentInSlots(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor, const std::vector<int32_t> a_slots, bool a_leftWeapon, bool a_rightWeapon) -> std::vector<RE::TESForm*>
+	auto GetWornEquipmentInSlots(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor, std::vector<std::uint32_t> a_slots, bool a_leftWeapon, bool a_rightWeapon) -> std::vector<RE::TESForm*>
 	{
 		std::vector<RE::TESForm*> vec;
 
@@ -251,8 +251,8 @@ namespace PapyrusActor
 		}
 
 		if (!a_slots.empty()) {
-			for (auto slot : a_slots) {
-				auto* const armor = changes->GetArmorInSlot(slot);
+			for (const auto slot : a_slots) {
+				auto* const armor = changes->GetArmorInSlot(slot); // NOLINT(cppcoreguidelines-narrowing-conversions)
 				vec.push_back(armor);
 			}
 		}

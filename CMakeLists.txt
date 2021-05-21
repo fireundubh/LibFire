@@ -117,6 +117,7 @@ if(NOT TARGET CommonLibSSE)
 endif()
 
 find_package(spdlog REQUIRED)
+find_package(fmt REQUIRED)
 
 # ---- Add source files ----
 
@@ -128,6 +129,7 @@ set(headers
         src/Papyrus/PapyrusFaction.h
         src/Papyrus/PapyrusFormList.h
         src/Papyrus/PapyrusObjectREFR.h
+        src/Papyrus/PapyrusSpell.h
         src/Papyrus/PapyrusString.h
         src/Papyrus/PapyrusTime.h
 )
@@ -140,6 +142,7 @@ set(sources
         src/Papyrus/PapyrusFaction.cpp
         src/Papyrus/PapyrusFormList.cpp
         src/Papyrus/PapyrusObjectREFR.cpp
+        src/Papyrus/PapyrusSpell.cpp
         src/Papyrus/PapyrusString.cpp
         src/Papyrus/PapyrusTime.cpp
 )
@@ -187,6 +190,7 @@ target_link_libraries(
         PUBLIC
             CommonLibSSE::CommonLibSSE
             spdlog::spdlog
+            fmt::fmt
         )
 
 target_link_options(

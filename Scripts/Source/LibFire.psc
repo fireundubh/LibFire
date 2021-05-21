@@ -77,6 +77,11 @@ Actor[] Function FindNearbyTeammates(Float afRadius) Global Native
 ;   If `abForce` is True, display names set by quest aliases will be overridden.
 Bool Function TryAffixDisplayName(ObjectReference akRef, Message akMessage, Bool abPrepend, Bool abForce) Global Native
 
+{ Spell }
+
+; Returns highest minimum skill level for `akSpell` (does not account for conditions)
+Int Function GetHighestMinSkillLevelForSpell(Spell akSpell) Global Native
+
 { String }
 
 ; Returns whether `asText` contains `asSubText` case-sensitively
@@ -84,6 +89,21 @@ Bool Function ContainsStr(String asText, String asSubText) Global Native
 
 ; Returns whether `asText` contains `asSubText` case-insensitively
 Bool Function ContainsText(String asText, String asSubText) Global Native
+
+; Replaces `{}` tokens in `asFormat` with `argValues` (supports up to 9 values)
+;   Note: Arrays exceeding the maximum number of values will be truncated.
+;   Syntax: https://fmt.dev/latest/syntax.html
+String Function FormatFloat(String asFormat, Float[] argValues) Global Native
+
+; Replaces `{}` tokens in `asFormat` with `argValues` (supports up to 9 values)
+;   Note: Arrays exceeding the maximum number of values will be truncated.
+;   Syntax: https://fmt.dev/latest/syntax.html
+String Function FormatInt(String asFormat, Int[] argValues) Global Native
+
+; Replaces `{}` tokens in `asFormat` with `argValues` (supports up to 9 values)
+;   Note: Arrays exceeding the maximum number of values will be truncated.
+;   Syntax: https://fmt.dev/latest/syntax.html
+String Function FormatString(String asFormat, String[] argValues) Global Native
 
 ; Returns the hexadecimal string representation of `aiSource`
 String Function IntToHex(Int aiSource) Global Native

@@ -4,6 +4,7 @@
 #include "Papyrus/PapyrusFaction.h"
 #include "Papyrus/PapyrusFormList.h"
 #include "Papyrus/PapyrusObjectREFR.h"
+#include "Papyrus/PapyrusSpell.h"
 #include "Papyrus/PapyrusString.h"
 #include "Papyrus/PapyrusTime.h"
 
@@ -25,6 +26,9 @@ namespace Papyrus
 
 		papyrus->Register(PapyrusObjectREFR::RegisterFuncs);
 		logger::info("Registered object reference functions");
+
+		papyrus->Register(PapyrusSpell::RegisterFuncs);
+		logger::info("Registered spell functions");
 
 		papyrus->Register(PapyrusString::RegisterFuncs);
 		logger::info("Registered string functions");

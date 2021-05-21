@@ -8,6 +8,7 @@
     "boost-atomic",
     "boost-stl-interfaces",
     "span-lite",
-    "spdlog"
+    "spdlog",
+    "fmt"
   ]
 }
