@@ -96,6 +96,21 @@ Bool Function ContainsStr(String asText, String asSubText) Global Native
 ; Returns whether `asText` contains `asSubText` case-insensitively
 Bool Function ContainsText(String asText, String asSubText) Global Native
 
+; Replaces `{}` tokens in `asFormat` with `argValues` (supports up to 9 values)
+;   Note: Arrays exceeding the maximum number of values will be truncated.
+;   Syntax: https://fmt.dev/latest/syntax.html
+String Function FormatFloat(String asFormat, Float[] argValues) Global Native
+
+; Replaces `{}` tokens in `asFormat` with `argValues` (supports up to 9 values)
+;   Note: Arrays exceeding the maximum number of values will be truncated.
+;   Syntax: https://fmt.dev/latest/syntax.html
+String Function FormatInt(String asFormat, Int[] argValues) Global Native
+
+; Replaces `{}` tokens in `asFormat` with `argValues` (supports up to 9 values)
+;   Note: Arrays exceeding the maximum number of values will be truncated.
+;   Syntax: https://fmt.dev/latest/syntax.html
+String Function FormatString(String asFormat, String[] argValues) Global Native
+
 ; Returns the hexadecimal string representation of `aiSource`
 String Function IntToHex(Int aiSource) Global Native
 
@@ -110,6 +125,13 @@ Int[] Function StrToIntArray(String asSource, String asDelimiter) Global Native
 
 ; Returns `asSource` wrapped to column `aiMaxLength` with lines delimited by newline character
 String Function WrapString(String asSource, Int aiMaxLength) Global Native
+```
+
+## Spell Functions
+
+```papyrus
+; Returns highest minimum skill level for `akSpell` (does not account for conditions, like level-based perks)
+Int Function GetHighestMinSkillLevelForSpell(Spell akSpell) Global Native
 ```
 
 ## Time Functions
