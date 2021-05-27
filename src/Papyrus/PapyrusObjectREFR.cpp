@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ActorValueHelper.h"
+
 #include "PapyrusObjectREFR.h"
 
 namespace PapyrusObjectREFR
@@ -178,49 +180,19 @@ namespace PapyrusObjectREFR
 		return vec;
 	}
 
-	auto TryAffixDisplayName(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::TESObjectREFR* a_ref, RE::BGSMessage* a_message, bool a_prepend, bool a_force) -> bool
+	auto GetPermanentActorValue(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::TESObjectREFR* a_ref, RE::BSFixedString a_actorValue) -> float
 	{
 		if (!a_ref) {
-			a_vm->TraceStack("akRef cannot be None", a_stackID, Severity::kInfo);
-			return false;
+			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
+			return -1.0;
 		}
 
-		if (!a_message) {
-			a_vm->TraceStack("akMessage cannot be None", a_stackID, Severity::kInfo);
-			return false;
+		if (const auto actor = a_ref->As<RE::Actor>(); actor) {
+			auto actorValue = ActorValueHelper::StringToActorValue(a_actorValue);
+			return actor->GetPermanentActorValue(actorValue);
 		}
 
-		const std::string_view displayName = a_ref->GetDisplayFullName();
-
-		if (displayName.empty()) {
-			return false;
-		}
-
-		const std::string_view affix = a_message->GetFullName();
-
-		if (affix.empty()) {
-			return false;
-		}
-
-		std::string_view fullName = displayName;
-
-		if (const auto base = a_ref->GetBaseObject(); base) {
-			fullName = base->GetName();
-		}
-
-		if (a_prepend && !displayName.starts_with(affix)) {
-			std::stringstream ss;
-			ss << affix << ' ' << fullName;
-			return a_ref->SetDisplayName(ss.str(), a_force);
-		}
-
-		if (!a_prepend && !displayName.ends_with(affix)) {
-			std::stringstream ss;
-			ss << fullName << ' ' << affix;
-			return a_ref->SetDisplayName(ss.str(), a_force);
-		}
-
-		return false;
+		return -1.0;
 	}
 
 	auto RegisterFuncs(VM* a_vm) -> bool
@@ -236,7 +208,7 @@ namespace PapyrusObjectREFR
 		a_vm->RegisterFunction("FindNearbyFollowers", PROJECT_NAME, FindNearbyFollowers);
 		a_vm->RegisterFunction("FindNearbySummons", PROJECT_NAME, FindNearbySummons);
 		a_vm->RegisterFunction("FindNearbyTeammates", PROJECT_NAME, FindNearbyTeammates);
-		a_vm->RegisterFunction("TryAffixDisplayName", PROJECT_NAME, TryAffixDisplayName);
+		a_vm->RegisterFunction("GetPermanentActorValue", PROJECT_NAME, GetPermanentActorValue);
 
 		return true;
 	}

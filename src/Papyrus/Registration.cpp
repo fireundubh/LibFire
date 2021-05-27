@@ -2,8 +2,10 @@
 
 #include "Papyrus/PapyrusActor.h"
 #include "Papyrus/PapyrusFaction.h"
+#include "Papyrus/PapyrusExperiments.h"
 #include "Papyrus/PapyrusFormList.h"
 #include "Papyrus/PapyrusObjectREFR.h"
+#include "Papyrus/PapyrusRace.h"
 #include "Papyrus/PapyrusSpell.h"
 #include "Papyrus/PapyrusString.h"
 #include "Papyrus/PapyrusTime.h"
@@ -27,6 +29,9 @@ namespace Papyrus
 		papyrus->Register(PapyrusObjectREFR::RegisterFuncs);
 		logger::info("Registered object reference functions");
 
+		papyrus->Register(PapyrusRace::RegisterFuncs);
+		logger::info("Registered race functions");
+
 		papyrus->Register(PapyrusSpell::RegisterFuncs);
 		logger::info("Registered spell functions");
 
@@ -35,5 +40,8 @@ namespace Papyrus
 
 		papyrus->Register(PapyrusTime::RegisterFuncs);
 		logger::info("Registered time functions");
+
+		papyrus->Register(PapyrusExperiments::RegisterFuncs);
+		logger::info("Registered experimental functions");
 	}
 }

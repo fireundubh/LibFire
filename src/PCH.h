@@ -13,6 +13,8 @@
 
 using namespace std::literals;
 
+namespace stl = SKSE::stl;
+
 namespace logger = SKSE::log;
 
 #define DLLEXPORT __declspec(dllexport)

@@ -81,10 +81,60 @@ Actor[] Function FindNearbySummons(ObjectReference akOrigin, Float afRadius) Glo
 ; Returns teammates in loaded cells within `afRadius` of player
 Actor[] Function FindNearbyTeammates(Float afRadius) Global Native
 
-; Attempts to affix full name of `akMessage` to display name for `akRef`, and returns whether operation was successful
-;   If `abPrepend` is True, the message name will be prepended. If False, the name will be appended.
-;   If `abForce` is True, display names set by quest aliases will be overridden.
-Bool Function TryAffixDisplayName(ObjectReference akRef, Message akMessage, Bool abPrepend, Bool abForce) Global Native
+; Returns the permanent value of `asActorValue` for `akActor`
+Float Function GetPermanentActorValue(ObjectReference akActor, String asActorValue) Global Native
+```
+
+## Race Functions
+
+```papyrus
+; Returns the skill boost value of `asActorValue` for `akRace`
+Int Function GetRaceSkillBonus(Race akRace, String asActorValue) Global Native
+
+; Returns names of boosted actor values for `akRace`
+String[] Function GetRaceSkills(Race akRace) Global Native
+
+; Returns the base male height for `akRace`
+Float Function GetRaceMaleHeight(Race akRace) Global Native
+
+; Returns the base female height for `akRace`
+Float Function GetRaceFemaleHeight(Race akRace) Global Native
+
+; Returns the base male weight for `akRace`
+Float Function GetRaceMaleWeight(Race akRace) Global Native
+
+; Returns the base female weight for `akRace`
+Float Function GetRaceFemaleWeight(Race akRace) Global Native
+
+; Returns the starting health for `akRace`
+Float Function GetRaceStartingHealth(Race akRace) Global Native
+
+; Returns the starting magicka for `akRace`
+Float Function GetRaceStartingMagicka(Race akRace) Global Native
+
+; Returns the starting stamina for `akRace`
+Float Function GetRaceStartingStamina(Race akRace) Global Native
+
+; Returns the base carry weight for `akRace`
+Float Function GetRaceCarryWeight(Race akRace) Global Native
+
+; Returns the base mass for `akRace`
+Float Function GetRaceMass(Race akRace) Global Native
+
+; Returns the base health regen for `akRace`
+Float Function GetRaceHealthRegen(Race akRace) Global Native
+
+; Returns the base magicka regen for `akRace`
+Float Function GetRaceMagickaRegen(Race akRace) Global Native
+
+; Returns the base stamina regen for `akRace`
+Float Function GetRaceStaminaRegen(Race akRace) Global Native
+
+; Returns the base unarmed damage for `akRace`
+Float Function GetRaceUnarmedDamage(Race akRace) Global Native
+
+; Returns the base unarmed reach for `akRace`
+Float Function GetRaceUnarmedReach(Race akRace) Global Native
 ```
 
 ## String Functions

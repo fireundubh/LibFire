@@ -1,6 +1,6 @@
 .idea/
-/cmake-build-debug*
-/cmake-build-release*
+/build-debug*
+/build-release*
 workspace.xml
 
 ## Ignore Visual Studio temporary files, build results, and

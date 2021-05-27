@@ -125,10 +125,13 @@ set(headers
         src/PCH.h
         src/Constants.h
         src/Papyrus/Registration.h
+        src/Papyrus/ActorValueHelper.h
         src/Papyrus/PapyrusActor.h
+        src/Papyrus/PapyrusExperiments.h
         src/Papyrus/PapyrusFaction.h
         src/Papyrus/PapyrusFormList.h
         src/Papyrus/PapyrusObjectREFR.h
+        src/Papyrus/PapyrusRace.h
         src/Papyrus/PapyrusSpell.h
         src/Papyrus/PapyrusString.h
         src/Papyrus/PapyrusTime.h
@@ -138,10 +141,13 @@ set(sources
         src/main.cpp
         src/PCH.cpp
         src/Papyrus/Registration.cpp
+        src/Papyrus/ActorValueHelper.cpp
         src/Papyrus/PapyrusActor.cpp
+        src/Papyrus/PapyrusExperiments.cpp
         src/Papyrus/PapyrusFaction.cpp
         src/Papyrus/PapyrusFormList.cpp
         src/Papyrus/PapyrusObjectREFR.cpp
+        src/Papyrus/PapyrusRace.cpp
         src/Papyrus/PapyrusSpell.cpp
         src/Papyrus/PapyrusString.cpp
         src/Papyrus/PapyrusTime.cpp
