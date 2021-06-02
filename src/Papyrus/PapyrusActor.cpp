@@ -4,6 +4,58 @@
 
 namespace PapyrusActor
 {
+	auto ActorFindAnyKeyword(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor, std::vector<RE::BGSKeyword*> a_keywords) -> std::int32_t
+	{
+		if (!a_actor) {
+			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
+			return -1;
+		}
+
+		if (a_keywords.empty()) {
+			a_vm->TraceStack("argKeywords cannot be empty", a_stackID, Severity::kInfo);
+			return -1;
+		}
+
+		for (auto& keyword : a_keywords) {
+			if (keyword && a_actor->HasKeyword(keyword)) {
+				if (auto it = std::find(a_keywords.begin(), a_keywords.end(), keyword); it != a_keywords.end()) {
+					return static_cast<std::int32_t>(it - a_keywords.begin());
+				}
+			}
+		}
+
+		return -1;
+	}
+
+	auto ActorFindAnyPerk(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor, std::vector<RE::BGSPerk*> a_perks) -> std::int32_t
+	{
+		if (!a_actor) {
+			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
+			return -1;
+		}
+
+		if (a_perks.empty()) {
+			a_vm->TraceStack("argPerks cannot be empty", a_stackID, Severity::kInfo);
+			return -1;
+		}
+
+		if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
+			if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
+				for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
+					const auto perkData = perkArray->perks[i];
+
+					if (const auto perk = perkData.perk; perk) {
+						if (auto it = std::find(a_perks.begin(), a_perks.end(), perk); it != a_perks.end()) {
+							return static_cast<std::int32_t>(it - a_perks.begin());
+						}
+					}
+				}
+			}
+		}
+
+		return -1;
+	}
+
 	auto ActorHasAnyKeyword(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor, RE::BGSListForm* a_keywords) -> bool
 	{
 		if (!a_actor) {
@@ -23,6 +75,33 @@ namespace PapyrusActor
 			if (auto* const keyword = form->As<RE::BGSKeyword>(); keyword) {
 				if (a_actor->HasKeyword(keyword)) {
 					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	auto ActorHasPerkRank(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor, RE::BGSPerk* a_perk, std::int32_t a_rank) -> bool
+	{
+		if (!a_actor) {
+			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
+			return false;
+		}
+
+		if (!a_perk) {
+			a_vm->TraceStack("akPerk cannot be None", a_stackID, Severity::kInfo);
+			return false;
+		}
+
+		if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
+			if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
+				for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
+					const auto perkData = perkArray->perks[i];
+
+					if (const auto perk = perkData.perk; perk && a_perk == perk && a_rank == static_cast<std::int32_t>(perkData.currentRank)) {
+						return true;
+					}
 				}
 			}
 		}
@@ -176,6 +255,57 @@ namespace PapyrusActor
 		return a_actor->IsSummoned();
 	}
 
+	auto GetActorPerkRank(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor, RE::BGSPerk* a_perk) -> std::int32_t
+	{
+		if (!a_actor) {
+			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
+			return -1;
+		}
+
+		if (!a_perk) {
+			a_vm->TraceStack("akPerk cannot be None", a_stackID, Severity::kInfo);
+			return -1;
+		}
+
+		if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
+			if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
+				for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
+					const auto perkData = perkArray->perks[i];
+
+					if (const auto perk = perkData.perk; perk && a_perk == perk) {
+						return static_cast<std::int32_t>(perkData.currentRank);
+					}
+				}
+			}
+		}
+
+		return -1;
+	}
+
+	auto GetActorPerks(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor) -> std::vector<RE::BGSPerk*>
+	{
+		std::vector<RE::BGSPerk*> result;
+
+		if (!a_actor) {
+			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
+			return result;
+		}
+
+		if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
+			if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
+				for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
+					const auto perkData = perkArray->perks[i];
+
+					if (const auto perk = perkData.perk; perk) {
+						result.emplace_back(perk);
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
 	auto GetCommandedActors(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor) -> std::vector<RE::Actor*>
 	{
 		std::vector<RE::Actor*> result;
@@ -277,13 +407,18 @@ namespace PapyrusActor
 			return false;
 		}
 
+		a_vm->RegisterFunction("ActorFindAnyKeyword", PROJECT_NAME, ActorFindAnyKeyword);
+		a_vm->RegisterFunction("ActorFindAnyPerk", PROJECT_NAME, ActorFindAnyPerk);
 		a_vm->RegisterFunction("ActorHasAnyKeyword", PROJECT_NAME, ActorHasAnyKeyword);
+		a_vm->RegisterFunction("ActorHasPerkRank", PROJECT_NAME, ActorHasPerkRank);
 		a_vm->RegisterFunction("ActorIsCommandedBy", PROJECT_NAME, ActorIsCommandedBy);
 		a_vm->RegisterFunction("ActorIsCommandedByPlayer", PROJECT_NAME, ActorIsCommandedByPlayer);
 		a_vm->RegisterFunction("ActorIsFollower", PROJECT_NAME, ActorIsFollower);
 		a_vm->RegisterFunction("ActorIsInAnyFaction", PROJECT_NAME, ActorIsInAnyFaction);
 		a_vm->RegisterFunction("ActorIsInFaction", PROJECT_NAME, ActorIsInFaction);
 		a_vm->RegisterFunction("ActorIsSummoned", PROJECT_NAME, ActorIsSummoned);
+		a_vm->RegisterFunction("GetActorPerkRank", PROJECT_NAME, GetActorPerkRank);
+		a_vm->RegisterFunction("GetActorPerks", PROJECT_NAME, GetActorPerks);
 		a_vm->RegisterFunction("GetCommandedActors", PROJECT_NAME, GetCommandedActors);
 		a_vm->RegisterFunction("GetCommandingActor", PROJECT_NAME, GetCommandingActor);
 		a_vm->RegisterFunction("GetEquippedAmmo", PROJECT_NAME, GetEquippedAmmo);

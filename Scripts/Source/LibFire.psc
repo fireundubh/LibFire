@@ -2,8 +2,17 @@ ScriptName LibFire Hidden
 
 { Actor }
 
+; Returns the index of the first keyword in `argKeywords` assigned to `akActor` - if not found, -1 is returned
+Int Function ActorFindAnyKeyword(Actor akActor, Keyword[] argKeywords) Global Native
+
+; Returns the index of the first perk in `argPerks` assigned to `akActor` - if not found, -1 is returned
+Int Function ActorFindAnyPerk(Actor akActor, Perk[] argPerks) Global Native
+
 ; Returns whether `akActor` has any keyword in `akKeywords`
 Bool Function ActorHasAnyKeyword(Actor akActor, FormList akKeywords) Global Native
+
+; Returns whether `akActor` has `akPerk` and its rank is `aiRank` - if match not found, `False` is returned
+Bool Function ActorHasPerkRank(Actor akActor, Perk akPerk, Int aiRank) Global Native
 
 ; Returns whether `akActor` is commanded by `akOtherActor`
 Bool Function ActorIsCommandedBy(Actor akActor, Actor akOtherActor) Global Native
@@ -22,6 +31,12 @@ Bool Function ActorIsInFaction(Actor akActor, Faction akFaction) Global Native
 
 ; Returns whether `akActor` is a summoned actor
 Bool Function ActorIsSummoned(Actor akActor) Global Native
+
+; Returns the current rank of `akPerk` assigned to `akActor` - if perk not assigned, -1 is returned
+Int Function GetActorPerkRank(Actor akActor, Perk akPerk) Global Native
+
+; Returns an array of perks assigned to `akActor`
+Perk[] Function GetActorPerks(Actor akActor) Global Native
 
 ; Returns an array of commanded actors for `akActor` or `None`
 Actor[] Function GetCommandedActors(Actor akActor) Global Native
@@ -127,10 +142,7 @@ Float Function GetRaceUnarmedReach(Race akRace) Global Native
 
 { String }
 
-; Returns whether `asText` contains `asSubText` case-sensitively
-Bool Function ContainsStr(String asText, String asSubText) Global Native
-
-; Returns whether `asText` contains `asSubText` case-insensitively
+; Returns whether `asText` contains `asSubText` (all Papyrus string comparisons are case-insensitive)
 Bool Function ContainsText(String asText, String asSubText) Global Native
 
 ; Replaces `{}` tokens in `asFormat` with `argValues` (supports up to 9 values)
