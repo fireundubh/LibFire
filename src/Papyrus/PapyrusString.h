@@ -9,7 +9,6 @@ namespace PapyrusString
 	using StackID = RE::VMStackID;
 	using Severity = RE::BSScript::ErrorLogger::Severity;
 
-	auto ContainsStr(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::BSFixedString a_text, RE::BSFixedString a_subtext) -> bool;
 	auto ContainsText(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::BSFixedString a_text, RE::BSFixedString a_subtext) -> bool;
 	auto FormatFloat(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::BSFixedString a_format, std::vector<float> a_argv) -> RE::BSFixedString;
 	auto FormatInt(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::BSFixedString a_format, std::vector<std::int32_t> a_argv) -> RE::BSFixedString;

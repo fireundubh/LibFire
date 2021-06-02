@@ -106,15 +106,6 @@ static auto splitAsInt(const RE::BSFixedString& src, const char delimiter) -> st
 
 namespace PapyrusString
 {
-	auto ContainsStr(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::BSFixedString a_text, RE::BSFixedString a_subtext) -> bool
-	{
-		auto text = std::string(a_text);
-		auto subtext = std::string(a_subtext);
-
-		auto it = std::search(text.begin(), text.end(), std::boyer_moore_searcher(subtext.begin(), subtext.end()));
-		return it != text.end();
-	}
-
 	auto ContainsText(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::BSFixedString a_text, RE::BSFixedString a_subtext) -> bool
 	{
 		auto text = std::string(a_text);
@@ -298,7 +289,6 @@ namespace PapyrusString
 			return false;
 		}
 
-		a_vm->RegisterFunction("ContainsStr", PROJECT_NAME, ContainsStr);
 		a_vm->RegisterFunction("ContainsText", PROJECT_NAME, ContainsText);
 		a_vm->RegisterFunction("FormatFloat", PROJECT_NAME, FormatFloat);
 		a_vm->RegisterFunction("FormatInt", PROJECT_NAME, FormatInt);
