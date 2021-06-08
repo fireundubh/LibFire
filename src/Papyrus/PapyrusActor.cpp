@@ -39,14 +39,26 @@ namespace PapyrusActor
 			return -1;
 		}
 
-		if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
-			if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
-				for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
-					const auto perkData = perkArray->perks[i];
-
-					if (const auto perk = perkData.perk; perk) {
+		if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_actor) {
+			if (const auto perkArray = player->addedPerks; !perkArray.empty()) {
+				for (auto perkData : perkArray) {
+					if (const auto perk = perkData->perk; perk) {
 						if (auto it = std::find(a_perks.begin(), a_perks.end(), perk); it != a_perks.end()) {
 							return static_cast<std::int32_t>(it - a_perks.begin());
+						}
+					}
+				}
+			}
+		} else {
+			if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
+				if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
+					for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
+						const auto perkData = perkArray->perks[i];
+
+						if (const auto perk = perkData.perk; perk) {
+							if (auto it = std::find(a_perks.begin(), a_perks.end(), perk); it != a_perks.end()) {
+								return static_cast<std::int32_t>(it - a_perks.begin());
+							}
 						}
 					}
 				}
@@ -94,13 +106,23 @@ namespace PapyrusActor
 			return false;
 		}
 
-		if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
-			if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
-				for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
-					const auto perkData = perkArray->perks[i];
-
-					if (const auto perk = perkData.perk; perk && a_perk == perk && a_rank == static_cast<std::int32_t>(perkData.currentRank)) {
+		if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_actor) {
+			if (const auto perkArray = player->addedPerks; !perkArray.empty()) {
+				for (auto perkData : perkArray) {
+					if (const auto perk = perkData->perk; perk && a_perk == perk && a_rank == static_cast<std::int32_t>(perkData->currentRank)) {
 						return true;
+					}
+				}
+			}
+		} else {
+			if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
+				if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
+					for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
+						const auto perkData = perkArray->perks[i];
+
+						if (const auto perk = perkData.perk; perk && a_perk == perk && a_rank == static_cast<std::int32_t>(perkData.currentRank)) {
+							return true;
+						}
 					}
 				}
 			}
@@ -267,13 +289,23 @@ namespace PapyrusActor
 			return -1;
 		}
 
-		if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
-			if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
-				for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
-					const auto perkData = perkArray->perks[i];
+		if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_actor) {
+			if (const auto perkArray = player->addedPerks; !perkArray.empty()) {
+				for (auto perkData : perkArray) {
+					if (const auto perk = perkData->perk; perk && a_perk == perk) {
+						return static_cast<std::int32_t>(perkData->currentRank);
+					}
+				}
+			}
+		} else {
+			if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
+				if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
+					for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
+						const auto perkData = perkArray->perks[i];
 
-					if (const auto perk = perkData.perk; perk && a_perk == perk) {
-						return static_cast<std::int32_t>(perkData.currentRank);
+						if (const auto perk = perkData.perk; perk && a_perk == perk) {
+							return static_cast<std::int32_t>(perkData.currentRank);
+						}
 					}
 				}
 			}
@@ -291,13 +323,23 @@ namespace PapyrusActor
 			return result;
 		}
 
-		if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
-			if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
-				for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
-					const auto perkData = perkArray->perks[i];
-
-					if (const auto perk = perkData.perk; perk) {
+		if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_actor) {
+			if (const auto perkArray = player->addedPerks; !perkArray.empty()) {
+				for (auto perkData : perkArray) {
+					if (const auto perk = perkData->perk; perk) {
 						result.emplace_back(perk);
+					}
+				}
+			}
+		} else {
+			if (const auto actorBase = a_actor->GetActorBase(); actorBase) {
+				if (const auto perkArray = actorBase->As<RE::BGSPerkRankArray>(); perkArray) {
+					for (std::uint32_t i = 0; i < perkArray->perkCount; ++i) {
+						const auto perkData = perkArray->perks[i];
+
+						if (const auto perk = perkData.perk; perk) {
+							result.emplace_back(perk);
+						}
 					}
 				}
 			}
@@ -382,7 +424,7 @@ namespace PapyrusActor
 
 		if (!a_slots.empty()) {
 			for (const auto slot : a_slots) {
-				auto* const armor = changes->GetArmorInSlot(slot); // NOLINT(cppcoreguidelines-narrowing-conversions)
+				auto* const armor = changes->GetArmorInSlot(slot);	// NOLINT(cppcoreguidelines-narrowing-conversions)
 				vec.push_back(armor);
 			}
 		}
