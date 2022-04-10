@@ -13,8 +13,7 @@ namespace PapyrusRace
 			return -1;
 		}
 
-		const auto actorValueId = RE::GetActorValueIdFromName(a_actorValue.c_str());
-		const auto actorValue = static_cast<RE::ActorValue>(actorValueId);
+		const auto actorValue = ActorValueHelper::StringToActorValue(a_actorValue);
 
 		for (const auto& [skill, bonus] : a_race->data.skillBoosts) {
 			const auto skillValue = static_cast<RE::ActorValue>(skill.get());

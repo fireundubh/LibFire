@@ -1,342 +1,190 @@
 #pragma once
 
+using namespace std;
+
+map<RE::ActorValue, RE::BSFixedString> ACTOR_VALUES = {
+	{ RE::ActorValue::kNone, "None" },
+	{ RE::ActorValue::kAggresion, "Aggression" },
+	{ RE::ActorValue::kConfidence, "Confidence" },
+	{ RE::ActorValue::kEnergy, "Energy" },
+	{ RE::ActorValue::kMorality, "Morality" },
+	{ RE::ActorValue::kMood, "Mood" },
+	{ RE::ActorValue::kAssistance, "Assistance" },
+	{ RE::ActorValue::kOneHanded, "OneHanded" },
+	{ RE::ActorValue::kTwoHanded, "TwoHanded" },
+	{ RE::ActorValue::kArchery, "Marksman" },
+	{ RE::ActorValue::kBlock, "Block" },
+	{ RE::ActorValue::kSmithing, "Smithing" },
+	{ RE::ActorValue::kHeavyArmor, "HeavyArmor" },
+	{ RE::ActorValue::kLightArmor, "LightArmor" },
+	{ RE::ActorValue::kPickpocket, "Pickpocket" },
+	{ RE::ActorValue::kLockpicking, "Lockpicking" },
+	{ RE::ActorValue::kSneak, "Sneak" },
+	{ RE::ActorValue::kAlchemy, "Alchemy" },
+	{ RE::ActorValue::kSpeech, "Speechcraft" },
+	{ RE::ActorValue::kAlteration, "Alteration" },
+	{ RE::ActorValue::kConjuration, "Conjuration" },
+	{ RE::ActorValue::kDestruction, "Destruction" },
+	{ RE::ActorValue::kIllusion, "Illusion" },
+	{ RE::ActorValue::kRestoration, "Restoration" },
+	{ RE::ActorValue::kEnchanting, "Enchanting" },
+	{ RE::ActorValue::kHealth, "Health" },
+	{ RE::ActorValue::kMagicka, "Magicka" },
+	{ RE::ActorValue::kStamina, "Stamina" },
+	{ RE::ActorValue::kHealRate, "HealRate" },
+	{ RE::ActorValue::KStaminaRate, "StaminaRate" },
+	{ RE::ActorValue::kSpeedMult, "SpeedMult" },
+	{ RE::ActorValue::kInventoryWeight, "InventoryWeight" },
+	{ RE::ActorValue::kCarryWeight, "CarryWeight" },
+	{ RE::ActorValue::kCriticalChance, "CriticalChance" },
+	{ RE::ActorValue::kMeleeDamage, "MeleeDamage" },
+	{ RE::ActorValue::kUnarmedDamage, "UnarmedDamage" },
+	{ RE::ActorValue::kMass, "Mass" },
+	{ RE::ActorValue::kVoicePoints, "VoicePoints" },
+	{ RE::ActorValue::kVoiceRate, "VoiceRate" },
+	{ RE::ActorValue::kDamageResist, "DamageResist" },
+	{ RE::ActorValue::kPoisonResist, "PoisonResist" },
+	{ RE::ActorValue::kResistFire, "ResistFire" },
+	{ RE::ActorValue::kResistShock, "ResistShock" },
+	{ RE::ActorValue::kResistFrost, "ResistFrost" },
+	{ RE::ActorValue::kResistMagic, "ResistMagic" },
+	{ RE::ActorValue::kResistDisease, "ResistDisease" },
+	{ RE::ActorValue::kUnknown46, "PerceptionCondition" },
+	{ RE::ActorValue::kUnknown47, "EnduranceCondition" },
+	{ RE::ActorValue::kUnknown48, "LeftAttackCondition" },
+	{ RE::ActorValue::kUnknown49, "RightAttackCondition" },
+	{ RE::ActorValue::kUnknown50, "LeftMobilityCondition" },
+	{ RE::ActorValue::kUnknown51, "RightMobilityCondition" },
+	{ RE::ActorValue::kUnknown52, "BrainCondition" },
+	{ RE::ActorValue::kParalysis, "Paralysis" },
+	{ RE::ActorValue::kInvisibility, "Invisibility" },
+	{ RE::ActorValue::kNightEye, "NightEye" },
+	{ RE::ActorValue::kDetectLifeRange, "DetectLifeRange" },
+	{ RE::ActorValue::kWaterBreathing, "WaterBreathing" },
+	{ RE::ActorValue::kWaterWalking, "WaterWalking" },
+	{ RE::ActorValue::kUnknown59, "Unknown59" },
+	{ RE::ActorValue::kFame, "Fame" },
+	{ RE::ActorValue::kInfamy, "Infamy" },
+	{ RE::ActorValue::kJumpingBonus, "JumpingBonus" },
+	{ RE::ActorValue::kWardPower, "WardPower" },
+	{ RE::ActorValue::kRightItemCharge, "RightItemCharge" },
+	{ RE::ActorValue::kArmorPerks, "ArmorPerks" },
+	{ RE::ActorValue::kShieldPerks, "ShieldPerks" },
+	{ RE::ActorValue::kWardDeflection, "WardDeflection" },
+	{ RE::ActorValue::kVariable01, "Variable01" },
+	{ RE::ActorValue::kVariable02, "Variable02" },
+	{ RE::ActorValue::kVariable03, "Variable03" },
+	{ RE::ActorValue::kVariable04, "Variable04" },
+	{ RE::ActorValue::kVariable05, "Variable05" },
+	{ RE::ActorValue::kVariable06, "Variable06" },
+	{ RE::ActorValue::kVariable07, "Variable07" },
+	{ RE::ActorValue::kVariable08, "Variable08" },
+	{ RE::ActorValue::kVariable09, "Variable09" },
+	{ RE::ActorValue::kVariable10, "Variable10" },
+	{ RE::ActorValue::kBowSpeedBonus, "BowSpeedBonus" },
+	{ RE::ActorValue::kFavorActive, "FavorActive" },
+	{ RE::ActorValue::kFavorsPerDay, "FavorsPerDay" },
+	{ RE::ActorValue::kFavorsPerDayTimer, "FavorsPerDayTimer" },
+	{ RE::ActorValue::kLeftItemCharge, "LeftItemCharge" },
+	{ RE::ActorValue::kAbsorbChance, "AbsorbChance" },
+	{ RE::ActorValue::kBlindness, "Blindness" },
+	{ RE::ActorValue::kWeaponSpeedMult, "WeaponSpeedMult" },
+	{ RE::ActorValue::kShoutRecoveryMult, "ShoutRecoveryMult" },
+	{ RE::ActorValue::kBowStaggerBonus, "BowStaggerBonus" },
+	{ RE::ActorValue::kTelekinesis, "Telekinesis" },
+	{ RE::ActorValue::kFavorPointsBonus, "FavorPointsBonus" },
+	{ RE::ActorValue::kLastBribedIntimidated, "LastBribedIntimidated" },
+	{ RE::ActorValue::kLastFlattered, "LastFlattered" },
+	{ RE::ActorValue::kMovementNoiseMult, "MovementNoiseMult" },
+	{ RE::ActorValue::kBypassVendorStolenCheck, "BypassVendorStolenCheck" },
+	{ RE::ActorValue::kBypassVendorKeywordCheck, "BypassVendorKeywordCheck" },
+	{ RE::ActorValue::kWaitingForPlayer, "WaitingForPlayer" },
+	{ RE::ActorValue::kOneHandedModifier, "OneHandedModifier" },
+	{ RE::ActorValue::kTwoHandedModifier, "TwoHandedModifier" },
+	{ RE::ActorValue::kMarksmanModifier, "MarksmanModifier" },
+	{ RE::ActorValue::kBlockModifier, "BlockModifier" },
+	{ RE::ActorValue::kSmithingModifier, "SmithingModifier" },
+	{ RE::ActorValue::kHeavyArmorModifier, "HeavyArmorModifier" },
+	{ RE::ActorValue::kLightArmorModifier, "LightArmorModifier" },
+	{ RE::ActorValue::kPickpocketModifier, "PickpocketModifier" },
+	{ RE::ActorValue::kLockpickingModifier, "LockpickingModifier" },
+	{ RE::ActorValue::kSneakingModifier, "SneakingModifier" },
+	{ RE::ActorValue::kAlchemyModifier, "AlchemyModifier" },
+	{ RE::ActorValue::kSpeechcraftModifier, "SpeechcraftModifier" },
+	{ RE::ActorValue::kAlterationModifier, "AlterationModifier" },
+	{ RE::ActorValue::kConjurationModifier, "ConjurationModifier" },
+	{ RE::ActorValue::kDestructionModifier, "DestructionModifier" },
+	{ RE::ActorValue::kIllusionModifier, "IllusionModifier" },
+	{ RE::ActorValue::kRestorationModifier, "RestorationModifier" },
+	{ RE::ActorValue::kEnchantingModifier, "EnchantingModifier" },
+	{ RE::ActorValue::kOneHandedSkillAdvance, "OneHandedSkillAdvance" },
+	{ RE::ActorValue::kTwoHandedSkillAdvance, "TwoHandedSkillAdvance" },
+	{ RE::ActorValue::kMarksmanSkillAdvance, "MarksmanSkillAdvance" },
+	{ RE::ActorValue::kBlockSkillAdvance, "BlockSkillAdvance" },
+	{ RE::ActorValue::kSmithingSkillAdvance, "SmithingSkillAdvance" },
+	{ RE::ActorValue::kHeavyArmorSkillAdvance, "HeavyArmorSkillAdvance" },
+	{ RE::ActorValue::kLightArmorSkillAdvance, "LightArmorSkillAdvance" },
+	{ RE::ActorValue::kPickpocketSkillAdvance, "PickpocketSkillAdvance" },
+	{ RE::ActorValue::kLockpickingSkillAdvance, "LockpickingSkillAdvance" },
+	{ RE::ActorValue::kSneakingSkillAdvance, "SneakingSkillAdvance" },
+	{ RE::ActorValue::kAlchemySkillAdvance, "AlchemySkillAdvance" },
+	{ RE::ActorValue::kSpeechcraftSkillAdvance, "SpeechcraftSkillAdvance" },
+	{ RE::ActorValue::kAlterationSkillAdvance, "AlterationSkillAdvance" },
+	{ RE::ActorValue::kConjurationSkillAdvance, "ConjurationSkillAdvance" },
+	{ RE::ActorValue::kDestructionSkillAdvance, "DestructionSkillAdvance" },
+	{ RE::ActorValue::kIllusionSkillAdvance, "IllusionSkillAdvance" },
+	{ RE::ActorValue::kRestorationSkillAdvance, "RestorationSkillAdvance" },
+	{ RE::ActorValue::kEnchantingSkillAdvance, "EnchantingSkillAdvance" },
+	{ RE::ActorValue::kLeftWeaponSpeedMultiply, "LeftWeaponSpeedMultiply" },
+	{ RE::ActorValue::kDragonSouls, "DragonSouls" },
+	{ RE::ActorValue::kCombatHealthRegenMultiply, "CombatHealthRegenMultiply" },
+	{ RE::ActorValue::kOneHandedPowerModifier, "OneHandedPowerModifier" },
+	{ RE::ActorValue::kTwoHandedPowerModifier, "TwoHandedPowerModifier" },
+	{ RE::ActorValue::kMarksmanPowerModifier, "MarksmanPowerModifier" },
+	{ RE::ActorValue::kBlockPowerModifier, "BlockPowerModifier" },
+	{ RE::ActorValue::kSmithingPowerModifier, "SmithingPowerModifier" },
+	{ RE::ActorValue::kHeavyArmorPowerModifier, "HeavyArmorPowerModifier" },
+	{ RE::ActorValue::kLightArmorPowerModifier, "LightArmorPowerModifier" },
+	{ RE::ActorValue::kPickpocketPowerModifier, "PickpocketPowerModifier" },
+	{ RE::ActorValue::kLockpickingPowerModifier, "LockpickingPowerModifier" },
+	{ RE::ActorValue::kSneakingPowerModifier, "SneakingPowerModifier" },
+	{ RE::ActorValue::kAlchemyPowerModifier, "AlchemyPowerModifier" },
+	{ RE::ActorValue::kSpeechcraftPowerModifier, "SpeechcraftPowerModifier" },
+	{ RE::ActorValue::kAlterationPowerModifier, "AlterationPowerModifier" },
+	{ RE::ActorValue::kConjurationPowerModifier, "ConjurationPowerModifier" },
+	{ RE::ActorValue::kDestructionPowerModifier, "DestructionPowerModifier" },
+	{ RE::ActorValue::kIllusionPowerModifier, "IllusionPowerModifier" },
+	{ RE::ActorValue::kRestorationPowerModifier, "RestorationPowerModifier" },
+	{ RE::ActorValue::kEnchantingPowerModifier, "EnchantingPowerModifier" },
+	{ RE::ActorValue::kDragonRend, "DragonRend" },
+	{ RE::ActorValue::kAttackDamageMult, "AttackDamageMult" },
+	{ RE::ActorValue::kHealRateMult, "HealRateMult" },
+	{ RE::ActorValue::kMagickaRateMult, "MagickaRateMult" },
+	{ RE::ActorValue::kStaminaRateMult, "StaminaRateMult" },
+	{ RE::ActorValue::kWerewolfPerks, "WerewolfPerks" },
+	{ RE::ActorValue::kVampirePerks, "VampirePerks" },
+	{ RE::ActorValue::kGrabActorOffset, "GrabActorOffset" },
+	{ RE::ActorValue::kGrabbed, "Grabbed" },
+	{ RE::ActorValue::kUnknown162, "DEPRECATED05" },
+	{ RE::ActorValue::kReflectDamage, "ReflectDamage" }
+};
+
 namespace ActorValueHelper
 {
+	auto StringToActorValue(const RE::BSFixedString& a_string) -> RE::ActorValue {
+		auto av = find_if(ACTOR_VALUES.begin(), ACTOR_VALUES.end(), [a_string](auto const& pr) {
+			return pr.second == a_string;
+		});
+
+		if (av != ACTOR_VALUES.end()) {
+			return av->first;
+		} else {
+			return RE::ActorValue::kNone;
+		}
+	}
+
 	auto ActorValueToString(const RE::ActorValue a_actorValue) -> RE::BSFixedString
 	{
-		switch (a_actorValue) {
-			case RE::ActorValue::kNone:
-				return "None";
-			case RE::ActorValue::kAggresion:
-				return "Aggression";
-			case RE::ActorValue::kConfidence:
-				return "Confidence";
-			case RE::ActorValue::kEnergy:
-				return "Energy";
-			case RE::ActorValue::kMorality:
-				return "Morality";
-			case RE::ActorValue::kMood:
-				return "Mood";
-			case RE::ActorValue::kAssistance:
-				return "Assistance";
-			case RE::ActorValue::kOneHanded:
-				return "OneHanded";
-			case RE::ActorValue::kTwoHanded:
-				return "TwoHanded";
-			case RE::ActorValue::kArchery:
-				return "Marksman";
-			case RE::ActorValue::kBlock:
-				return "Block";
-			case RE::ActorValue::kSmithing:
-				return "Smithing";
-			case RE::ActorValue::kHeavyArmor:
-				return "HeavyArmor";
-			case RE::ActorValue::kLightArmor:
-				return "LightArmor";
-			case RE::ActorValue::kPickpocket:
-				return "Pickpocket";
-			case RE::ActorValue::kLockpicking:
-				return "Lockpicking";
-			case RE::ActorValue::kSneak:
-				return "Sneak";
-			case RE::ActorValue::kAlchemy:
-				return "Alchemy";
-			case RE::ActorValue::kSpeech:
-				return "Speechcraft";
-			case RE::ActorValue::kAlteration:
-				return "Alteration";
-			case RE::ActorValue::kConjuration:
-				return "Conjuration";
-			case RE::ActorValue::kDestruction:
-				return "Destruction";
-			case RE::ActorValue::kIllusion:
-				return "Illusion";
-			case RE::ActorValue::kRestoration:
-				return "Restoration";
-			case RE::ActorValue::kEnchanting:
-				return "Enchanting";
-			case RE::ActorValue::kHealth:
-				return "Health";
-			case RE::ActorValue::kMagicka:
-				return "Magicka";
-			case RE::ActorValue::kStamina:
-				return "Stamina";
-			case RE::ActorValue::kHealRate:
-				return "HealRate";
-			case RE::ActorValue::kMagickaRate:
-				return "MagickaRate";
-			case RE::ActorValue::KStaminaRate:
-				return "StaminaRate";
-			case RE::ActorValue::kSpeedMult:
-				return "SpeedMult";
-			case RE::ActorValue::kInventoryWeight:
-				return "InventoryWeight";
-			case RE::ActorValue::kCarryWeight:
-				return "CarryWeight";
-			case RE::ActorValue::kCriticalChance:
-				return "CriticalChance";
-			case RE::ActorValue::kMeleeDamage:
-				return "MeleeDamage";
-			case RE::ActorValue::kUnarmedDamage:
-				return "UnarmedDamage";
-			case RE::ActorValue::kMass:
-				return "Mass";
-			case RE::ActorValue::kVoicePoints:
-				return "VoicePoints";
-			case RE::ActorValue::kVoiceRate:
-				return "VoiceRate";
-			case RE::ActorValue::kDamageResist:
-				return "DamageResist";
-			case RE::ActorValue::kPoisonResist:
-				return "PoisonResist";
-			case RE::ActorValue::kResistFire:
-				return "ResistFire";
-			case RE::ActorValue::kResistShock:
-				return "ResistShock";
-			case RE::ActorValue::kResistFrost:
-				return "ResistFrost";
-			case RE::ActorValue::kResistMagic:
-				return "ResistMagic";
-			case RE::ActorValue::kResistDisease:
-				return "ResistDisease";
-			case RE::ActorValue::kUnknown46:
-				return "PerceptionCondition";
-			case RE::ActorValue::kUnknown47:
-				return "EnduranceCondition";
-			case RE::ActorValue::kUnknown48:
-				return "LeftAttackCondition";
-			case RE::ActorValue::kUnknown49:
-				return "RightAttackCondition";
-			case RE::ActorValue::kUnknown50:
-				return "LeftMobilityCondition";
-			case RE::ActorValue::kUnknown51:
-				return "RightMobilityCondition";
-			case RE::ActorValue::kUnknown52:
-				return "BrainCondition";
-			case RE::ActorValue::kParalysis:
-				return "Paralysis";
-			case RE::ActorValue::kInvisibility:
-				return "Invisibility";
-			case RE::ActorValue::kNightEye:
-				return "NightEye";
-			case RE::ActorValue::kDetectLifeRange:
-				return "DetectLifeRange";
-			case RE::ActorValue::kWaterBreathing:
-				return "WaterBreathing";
-			case RE::ActorValue::kWaterWalking:
-				return "WaterWalking";
-			case RE::ActorValue::kUnknown59:
-				return "Unknown59";
-			case RE::ActorValue::kFame:
-				return "Fame";
-			case RE::ActorValue::kInfamy:
-				return "Infamy";
-			case RE::ActorValue::kJumpingBonus:
-				return "JumpingBonus";
-			case RE::ActorValue::kWardPower:
-				return "WardPower";
-			case RE::ActorValue::kRightItemCharge:
-				return "RightItemCharge";
-			case RE::ActorValue::kArmorPerks:
-				return "ArmorPerks";
-			case RE::ActorValue::kShieldPerks:
-				return "ShieldPerks";
-			case RE::ActorValue::kWardDeflection:
-				return "WardDeflection";
-			case RE::ActorValue::kVariable01:
-				return "Variable01";
-			case RE::ActorValue::kVariable02:
-				return "Variable02";
-			case RE::ActorValue::kVariable03:
-				return "Variable03";
-			case RE::ActorValue::kVariable04:
-				return "Variable04";
-			case RE::ActorValue::kVariable05:
-				return "Variable05";
-			case RE::ActorValue::kVariable06:
-				return "Variable06";
-			case RE::ActorValue::kVariable07:
-				return "Variable07";
-			case RE::ActorValue::kVariable08:
-				return "Variable08";
-			case RE::ActorValue::kVariable09:
-				return "Variable09";
-			case RE::ActorValue::kVariable10:
-				return "Variable10";
-			case RE::ActorValue::kBowSpeedBonus:
-				return "BowSpeedBonus";
-			case RE::ActorValue::kFavorActive:
-				return "FavorActive";
-			case RE::ActorValue::kFavorsPerDay:
-				return "FavorsPerDay";
-			case RE::ActorValue::kFavorsPerDayTimer:
-				return "FavorsPerDayTimer";
-			case RE::ActorValue::kLeftItemCharge:
-				return "LeftItemCharge";
-			case RE::ActorValue::kAbsorbChance:
-				return "AbsorbChance";
-			case RE::ActorValue::kBlindness:
-				return "Blindness";
-			case RE::ActorValue::kWeaponSpeedMult:
-				return "WeaponSpeedMult";
-			case RE::ActorValue::kShoutRecoveryMult:
-				return "ShoutRecoveryMult";
-			case RE::ActorValue::kBowStaggerBonus:
-				return "BowStaggerBonus";
-			case RE::ActorValue::kTelekinesis:
-				return "Telekinesis";
-			case RE::ActorValue::kFavorPointsBonus:
-				return "FavorPointsBonus";
-			case RE::ActorValue::kLastBribedIntimidated:
-				return "LastBribedIntimidated";
-			case RE::ActorValue::kLastFlattered:
-				return "LastFlattered";
-			case RE::ActorValue::kMovementNoiseMult:
-				return "MovementNoiseMult";
-			case RE::ActorValue::kBypassVendorStolenCheck:
-				return "BypassVendorStolenCheck";
-			case RE::ActorValue::kBypassVendorKeywordCheck:
-				return "BypassVendorKeywordCheck";
-			case RE::ActorValue::kWaitingForPlayer:
-				return "WaitingForPlayer";
-			case RE::ActorValue::kOneHandedModifier:
-				return "OneHandedModifier";
-			case RE::ActorValue::kTwoHandedModifier:
-				return "TwoHandedModifier";
-			case RE::ActorValue::kMarksmanModifier:
-				return "MarksmanModifier";
-			case RE::ActorValue::kBlockModifier:
-				return "BlockModifier";
-			case RE::ActorValue::kSmithingModifier:
-				return "SmithingModifier";
-			case RE::ActorValue::kHeavyArmorModifier:
-				return "HeavyArmorModifier";
-			case RE::ActorValue::kLightArmorModifier:
-				return "LightArmorModifier";
-			case RE::ActorValue::kPickpocketModifier:
-				return "PickpocketModifier";
-			case RE::ActorValue::kLockpickingModifier:
-				return "LockpickingModifier";
-			case RE::ActorValue::kSneakingModifier:
-				return "SneakingModifier";
-			case RE::ActorValue::kAlchemyModifier:
-				return "AlchemyModifier";
-			case RE::ActorValue::kSpeechcraftModifier:
-				return "SpeechcraftModifier";
-			case RE::ActorValue::kAlterationModifier:
-				return "AlterationModifier";
-			case RE::ActorValue::kConjurationModifier:
-				return "ConjurationModifier";
-			case RE::ActorValue::kDestructionModifier:
-				return "DestructionModifier";
-			case RE::ActorValue::kIllusionModifier:
-				return "IllusionModifier";
-			case RE::ActorValue::kRestorationModifier:
-				return "RestorationModifier";
-			case RE::ActorValue::kEnchantingModifier:
-				return "EnchantingModifier";
-			case RE::ActorValue::kOneHandedSkillAdvance:
-				return "OneHandedSkillAdvance";
-			case RE::ActorValue::kTwoHandedSkillAdvance:
-				return "TwoHandedSkillAdvance";
-			case RE::ActorValue::kMarksmanSkillAdvance:
-				return "MarksmanSkillAdvance";
-			case RE::ActorValue::kBlockSkillAdvance:
-				return "BlockSkillAdvance";
-			case RE::ActorValue::kSmithingSkillAdvance:
-				return "SmithingSkillAdvance";
-			case RE::ActorValue::kHeavyArmorSkillAdvance:
-				return "HeavyArmorSkillAdvance";
-			case RE::ActorValue::kLightArmorSkillAdvance:
-				return "LightArmorSkillAdvance";
-			case RE::ActorValue::kPickpocketSkillAdvance:
-				return "PickpocketSkillAdvance";
-			case RE::ActorValue::kLockpickingSkillAdvance:
-				return "LockpickingSkillAdvance";
-			case RE::ActorValue::kSneakingSkillAdvance:
-				return "SneakingSkillAdvance";
-			case RE::ActorValue::kAlchemySkillAdvance:
-				return "AlchemySkillAdvance";
-			case RE::ActorValue::kSpeechcraftSkillAdvance:
-				return "SpeechcraftSkillAdvance";
-			case RE::ActorValue::kAlterationSkillAdvance:
-				return "AlterationSkillAdvance";
-			case RE::ActorValue::kConjurationSkillAdvance:
-				return "ConjurationSkillAdvance";
-			case RE::ActorValue::kDestructionSkillAdvance:
-				return "DestructionSkillAdvance";
-			case RE::ActorValue::kIllusionSkillAdvance:
-				return "IllusionSkillAdvance";
-			case RE::ActorValue::kRestorationSkillAdvance:
-				return "RestorationSkillAdvance";
-			case RE::ActorValue::kEnchantingSkillAdvance:
-				return "EnchantingSkillAdvance";
-			case RE::ActorValue::kLeftWeaponSpeedMultiply:
-				return "LeftWeaponSpeedMultiply";
-			case RE::ActorValue::kDragonSouls:
-				return "DragonSouls";
-			case RE::ActorValue::kCombatHealthRegenMultiply:
-				return "CombatHealthRegenMultiply";
-			case RE::ActorValue::kOneHandedPowerModifier:
-				return "OneHandedPowerModifier";
-			case RE::ActorValue::kTwoHandedPowerModifier:
-				return "TwoHandedPowerModifier";
-			case RE::ActorValue::kMarksmanPowerModifier:
-				return "MarksmanPowerModifier";
-			case RE::ActorValue::kBlockPowerModifier:
-				return "BlockPowerModifier";
-			case RE::ActorValue::kSmithingPowerModifier:
-				return "SmithingPowerModifier";
-			case RE::ActorValue::kHeavyArmorPowerModifier:
-				return "HeavyArmorPowerModifier";
-			case RE::ActorValue::kLightArmorPowerModifier:
-				return "LightArmorPowerModifier";
-			case RE::ActorValue::kPickpocketPowerModifier:
-				return "PickpocketPowerModifier";
-			case RE::ActorValue::kLockpickingPowerModifier:
-				return "LockpickingPowerModifier";
-			case RE::ActorValue::kSneakingPowerModifier:
-				return "SneakingPowerModifier";
-			case RE::ActorValue::kAlchemyPowerModifier:
-				return "AlchemyPowerModifier";
-			case RE::ActorValue::kSpeechcraftPowerModifier:
-				return "SpeechcraftPowerModifier";
-			case RE::ActorValue::kAlterationPowerModifier:
-				return "AlterationPowerModifier";
-			case RE::ActorValue::kConjurationPowerModifier:
-				return "ConjurationPowerModifier";
-			case RE::ActorValue::kDestructionPowerModifier:
-				return "DestructionPowerModifier";
-			case RE::ActorValue::kIllusionPowerModifier:
-				return "IllusionPowerModifier";
-			case RE::ActorValue::kRestorationPowerModifier:
-				return "RestorationPowerModifier";
-			case RE::ActorValue::kEnchantingPowerModifier:
-				return "EnchantingPowerModifier";
-			case RE::ActorValue::kDragonRend:
-				return "DragonRend";
-			case RE::ActorValue::kAttackDamageMult:
-				return "AttackDamageMult";
-			case RE::ActorValue::kHealRateMult:
-				return "HealRateMult";
-			case RE::ActorValue::kMagickaRateMult:
-				return "MagickaRateMult";
-			case RE::ActorValue::kStaminaRateMult:
-				return "StaminaRateMult";
-			case RE::ActorValue::kWerewolfPerks:
-				return "WerewolfPerks";
-			case RE::ActorValue::kVampirePerks:
-				return "VampirePerks";
-			case RE::ActorValue::kGrabActorOffset:
-				return "GrabActorOffset";
-			case RE::ActorValue::kGrabbed:
-				return "Grabbed";
-			case RE::ActorValue::kUnknown162:
-				return "DEPRECATED05";
-			case RE::ActorValue::kReflectDamage:
-				return "ReflectDamage";
-			default:
-				return "None";
-		}
+		return ACTOR_VALUES.at(a_actorValue);
 	}
 }

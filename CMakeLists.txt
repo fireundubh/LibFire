@@ -112,10 +112,7 @@ if (MSVC)
     )
 endif()
 
-if(NOT TARGET CommonLibSSE)
-    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../CommonLibSSE" CommonLibSSE)
-endif()
-
+find_package(CommonLibSSE REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(fmt REQUIRED)
 
