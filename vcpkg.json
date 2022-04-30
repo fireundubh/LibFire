@@ -5,13 +5,12 @@
   "homepage": "https://github.com/fireundubh/LibFire",
   "license": "MIT",
   "dependencies": [
-    "boost-atomic",
     "boost-stl-interfaces",
-    "span-lite",
+    "rsm-binary-io",
     "spdlog",
-    "commonlibsse-ng"
+    "commonlibsse-ng-flatrim"
   ],
-  "builtin-baseline": "1c5939e275082fb6f4b2c8a546cd904b978f55ac",
+  "builtin-baseline": "6e52f3130db4b7a21f61fbc16eb9988e3286c6cf",
   "overrides": [
     {
       "name": "fmt",

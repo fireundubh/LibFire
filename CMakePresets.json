@@ -1,0 +1,223 @@
+{
+  "configurePresets": [
+    {
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "STRING",
+          "value": "Debug"
+        }
+      },
+      "errors": {
+        "deprecated": true
+      },
+      "hidden": true,
+      "name": "cmake-dev",
+      "warnings": {
+        "deprecated": true,
+        "dev": true
+      }
+    },
+    {
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "STRING",
+          "value": "$env{VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        }
+      },
+      "hidden": true,
+      "name": "vcpkg"
+    },
+    {
+      "cacheVariables": {
+        "CMAKE_MSVC_RUNTIME_LIBRARY": {
+          "type": "STRING",
+          "value": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
+        },
+        "VCPKG_TARGET_TRIPLET": {
+          "type": "STRING",
+          "value": "x64-windows-static-md"
+        }
+      },
+      "hidden": true,
+      "name": "windows"
+    },
+    {
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX $penv{CXXFLAGS}"
+      },
+      "generator": "Ninja",
+      "inherits": [
+        "cmake-dev",
+        "vcpkg",
+        "windows"
+      ],
+      "name": "Debug-All",
+      "displayName": "Debug (All)",
+      "binaryDir": "${sourceDir}/build/all"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_AE": {
+          "type": "STRING",
+          "value": "OFF"
+        },
+        "ENABLE_SKYRIM_SE": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "vr-only"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_VR": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "flatrim-only"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_AE": {
+          "type": "STRING",
+          "value": "OFF"
+        },
+        "ENABLE_SKYRIM_VR": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "se-only"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_SE": {
+          "type": "STRING",
+          "value": "OFF"
+        },
+        "ENABLE_SKYRIM_VR": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "ae-only"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_AE": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "pre-ae-only"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_SE": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "current"
+    },
+    {
+      "inherits": [
+        "Debug-All",
+        "flatrim-only"
+      ],
+      "name": "Debug-Flatrim",
+      "displayName": "Debug (Flatrim)",
+      "binaryDir": "${sourceDir}/build/flatrim"
+    },
+    {
+      "inherits": [
+        "Debug-All",
+        "vr-only"
+      ],
+      "name": "Debug-VR",
+      "displayName": "Debug (VR)",
+      "binaryDir": "${sourceDir}/build/vr"
+    },
+    {
+      "inherits": [
+        "Debug-All",
+        "ae-only"
+      ],
+      "name": "Debug-AE",
+      "displayName": "Debug (AE)",
+      "binaryDir": "${sourceDir}/build/ae"
+    },
+    {
+      "inherits": [
+        "Debug-All",
+        "se-only"
+      ],
+      "name": "Debug-SE",
+      "displayName": "Debug (SE)",
+      "binaryDir": "${sourceDir}/build/se"
+    },
+    {
+      "inherits": [
+        "Debug-All",
+        "pre-ae-only"
+      ],
+      "name": "Debug-Pre-AE",
+      "displayName": "Debug (Pre-AE)",
+      "binaryDir": "${sourceDir}/build/pre-ae"
+    },
+    {
+      "inherits": [
+        "Debug-All",
+        "current"
+      ],
+      "name": "Debug-Current",
+      "displayName": "Debug (Current)",
+      "binaryDir": "${sourceDir}/build/current"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "Debug-All",
+      "displayName": "Debug (All)",
+      "configurePreset": "Debug-All"
+    },
+    {
+      "name": "Debug-Flatrim",
+      "displayName": "Debug (Flatrim)",
+      "configurePreset": "Debug-Flatrim"
+    },
+    {
+      "name": "Debug-VR",
+      "displayName": "Debug (VR)",
+      "configurePreset": "Debug-VR"
+    },
+    {
+      "name": "Debug-AE",
+      "displayName": "Debug (AE)",
+      "configurePreset": "Debug-AE"
+    },
+    {
+      "name": "Debug-SE",
+      "displayName": "Debug (SE)",
+      "configurePreset": "Debug-SE"
+    },
+    {
+      "name": "Debug-Pre-AE",
+      "displayName": "Debug (Pre-AE)",
+      "configurePreset": "Debug-Pre-AE"
+    },
+    {
+      "name": "Debug-Current",
+      "displayName": "Debug (Current)",
+      "configurePreset": "Debug-Current"
+    }
+  ],
+  "version": 2
+}
