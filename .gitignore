@@ -1,4 +1,5 @@
 .idea/
+/build*
 /build-debug*
 /build-release*
 workspace.xml
