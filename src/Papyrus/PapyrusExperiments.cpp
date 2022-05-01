@@ -106,12 +106,12 @@ namespace PapyrusExperiments
 	auto RegisterFuncs(VM* a_vm) -> bool
 	{
 		if (!a_vm) {
-			logger::info("PapyrusExperiments - cannot get VMState");
+			logger::info("PapyrusExperiments - cannot get VMState"sv);
 			return false;
 		}
 
-		a_vm->RegisterFunction("FindContainedFormsOfFormType", PROJECT_NAME, FindContainedFormsOfFormType);
-		a_vm->RegisterFunction("SetContainedFormDisplayNames", PROJECT_NAME, SetContainedFormDisplayNames);
+		a_vm->RegisterFunction("FindContainedFormsOfFormType"sv, PROJECT_NAME, FindContainedFormsOfFormType);
+		a_vm->RegisterFunction("SetContainedFormDisplayNames"sv, PROJECT_NAME, SetContainedFormDisplayNames);
 
 		return true;
 	}

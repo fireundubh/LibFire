@@ -18,30 +18,30 @@ namespace Papyrus
 		const auto papyrus = SKSE::GetPapyrusInterface();
 
 		papyrus->Register(PapyrusActor::RegisterFuncs);
-		logger::info("Registered actor functions");
+		logger::info("Registered actor functions"sv);
 
 		papyrus->Register(PapyrusFaction::RegisterFuncs);
-		logger::info("Registered faction functions");
+		logger::info("Registered faction functions"sv);
 
 		papyrus->Register(PapyrusFormList::RegisterFuncs);
-		logger::info("Registered formlist functions");
+		logger::info("Registered formlist functions"sv);
 
 		papyrus->Register(PapyrusObjectREFR::RegisterFuncs);
-		logger::info("Registered object reference functions");
+		logger::info("Registered object reference functions"sv);
 
 		papyrus->Register(PapyrusRace::RegisterFuncs);
-		logger::info("Registered race functions");
+		logger::info("Registered race functions"sv);
 
 		papyrus->Register(PapyrusSpell::RegisterFuncs);
-		logger::info("Registered spell functions");
+		logger::info("Registered spell functions"sv);
 
 		papyrus->Register(PapyrusString::RegisterFuncs);
-		logger::info("Registered string functions");
+		logger::info("Registered string functions"sv);
 
 		papyrus->Register(PapyrusTime::RegisterFuncs);
-		logger::info("Registered time functions");
+		logger::info("Registered time functions"sv);
 
 		papyrus->Register(PapyrusExperiments::RegisterFuncs);
-		logger::info("Registered experimental functions");
+		logger::info("Registered experimental functions"sv);
 	}
 }

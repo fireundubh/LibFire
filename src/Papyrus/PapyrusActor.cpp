@@ -445,26 +445,26 @@ namespace PapyrusActor
 	auto RegisterFuncs(VM* a_vm) -> bool
 	{
 		if (!a_vm) {
-			logger::info("PapyrusActor - couldn't get VMState");
+			logger::info("PapyrusActor - couldn't get VMState"sv);
 			return false;
 		}
 
-		a_vm->RegisterFunction("ActorFindAnyKeyword", PROJECT_NAME, ActorFindAnyKeyword);
-		a_vm->RegisterFunction("ActorFindAnyPerk", PROJECT_NAME, ActorFindAnyPerk);
-		a_vm->RegisterFunction("ActorHasAnyKeyword", PROJECT_NAME, ActorHasAnyKeyword);
-		a_vm->RegisterFunction("ActorHasPerkRank", PROJECT_NAME, ActorHasPerkRank);
-		a_vm->RegisterFunction("ActorIsCommandedBy", PROJECT_NAME, ActorIsCommandedBy);
-		a_vm->RegisterFunction("ActorIsCommandedByPlayer", PROJECT_NAME, ActorIsCommandedByPlayer);
-		a_vm->RegisterFunction("ActorIsFollower", PROJECT_NAME, ActorIsFollower);
-		a_vm->RegisterFunction("ActorIsInAnyFaction", PROJECT_NAME, ActorIsInAnyFaction);
-		a_vm->RegisterFunction("ActorIsInFaction", PROJECT_NAME, ActorIsInFaction);
-		a_vm->RegisterFunction("ActorIsSummoned", PROJECT_NAME, ActorIsSummoned);
-		a_vm->RegisterFunction("GetActorPerkRank", PROJECT_NAME, GetActorPerkRank);
-		a_vm->RegisterFunction("GetActorPerks", PROJECT_NAME, GetActorPerks);
-		a_vm->RegisterFunction("GetCommandedActors", PROJECT_NAME, GetCommandedActors);
-		a_vm->RegisterFunction("GetCommandingActor", PROJECT_NAME, GetCommandingActor);
-		a_vm->RegisterFunction("GetEquippedAmmo", PROJECT_NAME, GetEquippedAmmo);
-		a_vm->RegisterFunction("GetWornEquipmentInSlots", PROJECT_NAME, GetWornEquipmentInSlots);
+		a_vm->RegisterFunction("ActorFindAnyKeyword"sv, PROJECT_NAME, ActorFindAnyKeyword);
+		a_vm->RegisterFunction("ActorFindAnyPerk"sv, PROJECT_NAME, ActorFindAnyPerk);
+		a_vm->RegisterFunction("ActorHasAnyKeyword"sv, PROJECT_NAME, ActorHasAnyKeyword);
+		a_vm->RegisterFunction("ActorHasPerkRank"sv, PROJECT_NAME, ActorHasPerkRank);
+		a_vm->RegisterFunction("ActorIsCommandedBy"sv, PROJECT_NAME, ActorIsCommandedBy);
+		a_vm->RegisterFunction("ActorIsCommandedByPlayer"sv, PROJECT_NAME, ActorIsCommandedByPlayer);
+		a_vm->RegisterFunction("ActorIsFollower"sv, PROJECT_NAME, ActorIsFollower);
+		a_vm->RegisterFunction("ActorIsInAnyFaction"sv, PROJECT_NAME, ActorIsInAnyFaction);
+		a_vm->RegisterFunction("ActorIsInFaction"sv, PROJECT_NAME, ActorIsInFaction);
+		a_vm->RegisterFunction("ActorIsSummoned"sv, PROJECT_NAME, ActorIsSummoned);
+		a_vm->RegisterFunction("GetActorPerkRank"sv, PROJECT_NAME, GetActorPerkRank);
+		a_vm->RegisterFunction("GetActorPerks"sv, PROJECT_NAME, GetActorPerks);
+		a_vm->RegisterFunction("GetCommandedActors"sv, PROJECT_NAME, GetCommandedActors);
+		a_vm->RegisterFunction("GetCommandingActor"sv, PROJECT_NAME, GetCommandingActor);
+		a_vm->RegisterFunction("GetEquippedAmmo"sv, PROJECT_NAME, GetEquippedAmmo);
+		a_vm->RegisterFunction("GetWornEquipmentInSlots"sv, PROJECT_NAME, GetWornEquipmentInSlots);
 
 		return true;
 	}

@@ -186,31 +186,31 @@ namespace PapyrusRace
 	auto RegisterFuncs(VM* a_vm) -> bool
 	{
 		if (!a_vm) {
-			logger::info("PapyrusRace - cannot get VMState");
+			logger::info("PapyrusRace - cannot get VMState"sv);
 			return false;
 		}
 
-		a_vm->RegisterFunction("GetRaceSkillBonus", PROJECT_NAME, GetRaceSkillBonus);
-		a_vm->RegisterFunction("GetRaceSkills", PROJECT_NAME, GetRaceSkills);
+		a_vm->RegisterFunction("GetRaceSkillBonus"sv, PROJECT_NAME, GetRaceSkillBonus);
+		a_vm->RegisterFunction("GetRaceSkills"sv, PROJECT_NAME, GetRaceSkills);
 
-		a_vm->RegisterFunction("GetRaceMaleHeight", PROJECT_NAME, GetRaceMaleHeight);
-		a_vm->RegisterFunction("GetRaceMaleWeight", PROJECT_NAME, GetRaceMaleWeight);
-		a_vm->RegisterFunction("GetRaceFemaleHeight", PROJECT_NAME, GetRaceFemaleHeight);
-		a_vm->RegisterFunction("GetRaceFemaleWeight", PROJECT_NAME, GetRaceFemaleWeight);
+		a_vm->RegisterFunction("GetRaceMaleHeight"sv, PROJECT_NAME, GetRaceMaleHeight);
+		a_vm->RegisterFunction("GetRaceMaleWeight"sv, PROJECT_NAME, GetRaceMaleWeight);
+		a_vm->RegisterFunction("GetRaceFemaleHeight"sv, PROJECT_NAME, GetRaceFemaleHeight);
+		a_vm->RegisterFunction("GetRaceFemaleWeight"sv, PROJECT_NAME, GetRaceFemaleWeight);
 
-		a_vm->RegisterFunction("GetRaceStartingHealth", PROJECT_NAME, GetRaceStartingHealth);
-		a_vm->RegisterFunction("GetRaceStartingMagicka", PROJECT_NAME, GetRaceStartingMagicka);
-		a_vm->RegisterFunction("GetRaceStartingStamina", PROJECT_NAME, GetRaceStartingStamina);
+		a_vm->RegisterFunction("GetRaceStartingHealth"sv, PROJECT_NAME, GetRaceStartingHealth);
+		a_vm->RegisterFunction("GetRaceStartingMagicka"sv, PROJECT_NAME, GetRaceStartingMagicka);
+		a_vm->RegisterFunction("GetRaceStartingStamina"sv, PROJECT_NAME, GetRaceStartingStamina);
 
-		a_vm->RegisterFunction("GetRaceCarryWeight", PROJECT_NAME, GetRaceCarryWeight);
-		a_vm->RegisterFunction("GetRaceMass", PROJECT_NAME, GetRaceMass);
+		a_vm->RegisterFunction("GetRaceCarryWeight"sv, PROJECT_NAME, GetRaceCarryWeight);
+		a_vm->RegisterFunction("GetRaceMass"sv, PROJECT_NAME, GetRaceMass);
 
-		a_vm->RegisterFunction("GetRaceHealthRegen", PROJECT_NAME, GetRaceHealthRegen);
-		a_vm->RegisterFunction("GetRaceMagickaRegen", PROJECT_NAME, GetRaceMagickaRegen);
-		a_vm->RegisterFunction("GetRaceStaminaRegen", PROJECT_NAME, GetRaceStaminaRegen);
+		a_vm->RegisterFunction("GetRaceHealthRegen"sv, PROJECT_NAME, GetRaceHealthRegen);
+		a_vm->RegisterFunction("GetRaceMagickaRegen"sv, PROJECT_NAME, GetRaceMagickaRegen);
+		a_vm->RegisterFunction("GetRaceStaminaRegen"sv, PROJECT_NAME, GetRaceStaminaRegen);
 
-		a_vm->RegisterFunction("GetRaceUnarmedDamage", PROJECT_NAME, GetRaceUnarmedDamage);
-		a_vm->RegisterFunction("GetRaceUnarmedReach", PROJECT_NAME, GetRaceUnarmedReach);
+		a_vm->RegisterFunction("GetRaceUnarmedDamage"sv, PROJECT_NAME, GetRaceUnarmedDamage);
+		a_vm->RegisterFunction("GetRaceUnarmedReach"sv, PROJECT_NAME, GetRaceUnarmedReach);
 
 		return true;
 	}

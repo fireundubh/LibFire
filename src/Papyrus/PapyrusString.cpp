@@ -285,19 +285,19 @@ namespace PapyrusString
 	auto RegisterFuncs(VM* a_vm) -> bool
 	{
 		if (!a_vm) {
-			logger::info("PapyrusString - cannot get VMState");
+			logger::info("PapyrusString - cannot get VMState"sv);
 			return false;
 		}
 
-		a_vm->RegisterFunction("ContainsText", PROJECT_NAME, ContainsText);
-		a_vm->RegisterFunction("FormatFloat", PROJECT_NAME, FormatFloat);
-		a_vm->RegisterFunction("FormatInt", PROJECT_NAME, FormatInt);
-		a_vm->RegisterFunction("FormatString", PROJECT_NAME, FormatString);
-		a_vm->RegisterFunction("IntToHex", PROJECT_NAME, IntToHex);
-		a_vm->RegisterFunction("SplitString", PROJECT_NAME, SplitString);
-		a_vm->RegisterFunction("StrToFloatArray", PROJECT_NAME, StrToFloatArray);
-		a_vm->RegisterFunction("StrToIntArray", PROJECT_NAME, StrToIntArray);
-		a_vm->RegisterFunction("WrapString", PROJECT_NAME, WrapString);
+		a_vm->RegisterFunction("ContainsText"sv, PROJECT_NAME, ContainsText);
+		a_vm->RegisterFunction("FormatFloat"sv, PROJECT_NAME, FormatFloat);
+		a_vm->RegisterFunction("FormatInt"sv, PROJECT_NAME, FormatInt);
+		a_vm->RegisterFunction("FormatString"sv, PROJECT_NAME, FormatString);
+		a_vm->RegisterFunction("IntToHex"sv, PROJECT_NAME, IntToHex);
+		a_vm->RegisterFunction("SplitString"sv, PROJECT_NAME, SplitString);
+		a_vm->RegisterFunction("StrToFloatArray"sv, PROJECT_NAME, StrToFloatArray);
+		a_vm->RegisterFunction("StrToIntArray"sv, PROJECT_NAME, StrToIntArray);
+		a_vm->RegisterFunction("WrapString"sv, PROJECT_NAME, WrapString);
 
 		return true;
 	}

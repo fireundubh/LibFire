@@ -79,12 +79,12 @@ namespace PapyrusFaction
 	auto RegisterFuncs(VM* a_vm) -> bool
 	{
 		if (!a_vm) {
-			logger::info("PapyrusFaction - cannot get VMState");
+			logger::info("PapyrusFaction - cannot get VMState"sv);
 			return false;
 		}
 
-		a_vm->RegisterFunction("SetAllies", PROJECT_NAME, SetAllies);
-		a_vm->RegisterFunction("SetEnemies", PROJECT_NAME, SetEnemies);
+		a_vm->RegisterFunction("SetAllies"sv, PROJECT_NAME, SetAllies);
+		a_vm->RegisterFunction("SetEnemies"sv, PROJECT_NAME, SetEnemies);
 
 		return true;
 	}

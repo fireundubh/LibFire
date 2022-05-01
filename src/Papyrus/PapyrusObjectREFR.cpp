@@ -198,17 +198,17 @@ namespace PapyrusObjectREFR
 	auto RegisterFuncs(VM* a_vm) -> bool
 	{
 		if (!a_vm) {
-			logger::info("PapyrusObjectREFR - couldn't get VMState");
+			logger::info("PapyrusObjectREFR - couldn't get VMState"sv);
 			return false;
 		}
 
-		a_vm->RegisterFunction("FindNearbyActors", PROJECT_NAME, FindNearbyActors);
-		a_vm->RegisterFunction("FindNearbyBooks", PROJECT_NAME, FindNearbyBooks);
-		a_vm->RegisterFunction("FindNearbyCommandedActors", PROJECT_NAME, FindNearbyCommandedActors);
-		a_vm->RegisterFunction("FindNearbyFollowers", PROJECT_NAME, FindNearbyFollowers);
-		a_vm->RegisterFunction("FindNearbySummons", PROJECT_NAME, FindNearbySummons);
-		a_vm->RegisterFunction("FindNearbyTeammates", PROJECT_NAME, FindNearbyTeammates);
-		a_vm->RegisterFunction("GetPermanentActorValue", PROJECT_NAME, GetPermanentActorValue);
+		a_vm->RegisterFunction("FindNearbyActors"sv, PROJECT_NAME, FindNearbyActors);
+		a_vm->RegisterFunction("FindNearbyBooks"sv, PROJECT_NAME, FindNearbyBooks);
+		a_vm->RegisterFunction("FindNearbyCommandedActors"sv, PROJECT_NAME, FindNearbyCommandedActors);
+		a_vm->RegisterFunction("FindNearbyFollowers"sv, PROJECT_NAME, FindNearbyFollowers);
+		a_vm->RegisterFunction("FindNearbySummons"sv, PROJECT_NAME, FindNearbySummons);
+		a_vm->RegisterFunction("FindNearbyTeammates"sv, PROJECT_NAME, FindNearbyTeammates);
+		a_vm->RegisterFunction("GetPermanentActorValue"sv, PROJECT_NAME, GetPermanentActorValue);
 
 		return true;
 	}

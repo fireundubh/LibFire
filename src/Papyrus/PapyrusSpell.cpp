@@ -32,11 +32,11 @@ namespace PapyrusSpell
 	auto RegisterFuncs(VM* a_vm) -> bool
 	{
 		if (!a_vm) {
-			logger::info("PapyrusSpell - cannot get VMState");
+			logger::info("PapyrusSpell - cannot get VMState"sv);
 			return false;
 		}
 
-		a_vm->RegisterFunction("GetHighestMinSkillLevelForSpell", PROJECT_NAME, GetHighestMinSkillLevelForSpell);
+		a_vm->RegisterFunction("GetHighestMinSkillLevelForSpell"sv, PROJECT_NAME, GetHighestMinSkillLevelForSpell);
 
 		return true;
 	}

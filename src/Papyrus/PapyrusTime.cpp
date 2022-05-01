@@ -23,11 +23,11 @@ namespace PapyrusTime
 	auto RegisterFuncs(VM* a_vm) -> bool
 	{
 		if (!a_vm) {
-			logger::info("PapyrusTime - cannot get VMState");
+			logger::info("PapyrusTime - cannot get VMState"sv);
 			return false;
 		}
 
-		a_vm->RegisterFunction("GetCurrentHourOfDay", PROJECT_NAME, GetCurrentHourOfDay);
+		a_vm->RegisterFunction("GetCurrentHourOfDay"sv, PROJECT_NAME, GetCurrentHourOfDay);
 
 		return true;
 	}

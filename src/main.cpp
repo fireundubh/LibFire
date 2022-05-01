@@ -10,26 +10,25 @@ namespace
 #else
 		auto path = logger::log_directory();
 		if (!path) {
-			return;
+			util::report_and_fail("Failed to find standard logging directory"sv);
 		}
 
-		*path /= fmt::format(FMT_STRING("{}.log"), PROJECT_NAME);
+		*path /= fmt::format("{}.log"sv, PROJECT_NAME);
 		auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(path->string(), true);
 #endif
 
-		auto log = std::make_shared<spdlog::logger>("global log"s, std::move(sink));
-
 #ifndef NDEBUG
-		log->set_level(spdlog::level::trace);
+		const auto level = spdlog::level::trace;
 #else
-		log->set_level(spdlog::level::info);
-		log->flush_on(spdlog::level::warn);
+		const auto level = spdlog::level::info;
 #endif
+
+		auto log = std::make_shared<spdlog::logger>("global log"s, std::move(sink));
+		log->set_level(level);
+		log->flush_on(level);
 
 		spdlog::set_default_logger(std::move(log));
 		spdlog::set_pattern("%g(%#): [%^%l%$] %v"s);
-
-		logger::info(FMT_STRING("{} v{}"), PROJECT_NAME, FIRE_VERSION_VERSTRING);
 	}
 }
 
@@ -60,7 +59,7 @@ extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
 
 	v.PluginName(PROJECT_NAME);
 	v.PluginVersion(FIRE_VERSION_MAJOR);
-
+	v.AuthorName("fireundubh");
 	v.UsesAddressLibrary(true);
 	v.CompatibleVersions({ SKSE::RUNTIME_LATEST, SKSE::RUNTIME_1_5_97 });
 
@@ -71,12 +70,11 @@ extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 {
 	InitializeLog();
+	logger::info("{} v{}"sv, PROJECT_NAME, FIRE_VERSION_VERSTRING);
 
 	Init(a_skse);
 
 	Papyrus::Register();
-
-	logger::info(FMT_STRING("{} loaded"), PROJECT_NAME);
 
 	return true;
 }

@@ -61,12 +61,12 @@ namespace PapyrusFormList
 	auto RegisterFuncs(VM* a_vm) -> bool
 	{
 		if (!a_vm) {
-			logger::info("PapyrusFormList - cannot get VMState");
+			logger::info("PapyrusFormList - cannot get VMState"sv);
 			return false;
 		}
 
-		a_vm->RegisterFunction("SearchListForForms", PROJECT_NAME, SearchListForForms);
-		a_vm->RegisterFunction("SearchListsForForm", PROJECT_NAME, SearchListsForForm);
+		a_vm->RegisterFunction("SearchListForForms"sv, PROJECT_NAME, SearchListForForms);
+		a_vm->RegisterFunction("SearchListsForForm"sv, PROJECT_NAME, SearchListsForForm);
 
 		return true;
 	}
