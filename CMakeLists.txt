@@ -179,9 +179,11 @@ target_precompile_headers(
             src/PCH.h
         )
 
+set(OUTPUT_ROOT "$ENV{SkyrimAE_Mods}/${PROJECT_NAME}" CACHE STRING "")
+
 add_custom_command(
         TARGET ${PROJECT_NAME}
         POST_BUILD
-        COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:${PROJECT_NAME}>" "F:/ModOrganizer/Games/SkyrimSE/mods/LibFire/SKSE/Plugins/"
-        COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_SOURCE_DIR}/Scripts/Source/LibFire.psc" "F:/ModOrganizer/Games/SkyrimSE/mods/LibFire/Scripts/Source/LibFire.psc"
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:${PROJECT_NAME}>" "${OUTPUT_ROOT}/SKSE/Plugins/"
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_SOURCE_DIR}/Scripts/Source/${PROJECT_NAME}.psc" "${OUTPUT_ROOT}/Scripts/Source/${PROJECT_NAME}.psc"
 )
