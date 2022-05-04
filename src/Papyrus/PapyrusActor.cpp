@@ -406,42 +406,6 @@ namespace PapyrusActor
 		return a_actor->GetCurrentAmmo();
 	}
 
-	auto GetWornEquipmentInSlots(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor, std::vector<std::uint32_t> a_slots, bool a_leftWeapon, bool a_rightWeapon) -> std::vector<RE::TESForm*>
-	{
-		std::vector<RE::TESForm*> vec;
-
-		if (!a_actor) {
-			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
-			return vec;
-		}
-
-		auto* changes = a_actor->GetInventoryChanges();
-
-		if (!changes) {
-			a_vm->TraceStack("akActor does not have inventory", a_stackID, Severity::kInfo);
-			return vec;
-		}
-
-		if (!a_slots.empty()) {
-			for (const auto slot : a_slots) {
-				auto* const armor = changes->GetArmorInSlot(slot);	// NOLINT(cppcoreguidelines-narrowing-conversions)
-				vec.push_back(armor);
-			}
-		}
-
-		if (a_leftWeapon) {
-			auto* lweapon = a_actor->GetEquippedObject(true);
-			vec.push_back(lweapon);
-		}
-
-		if (a_rightWeapon) {
-			auto* rweapon = a_actor->GetEquippedObject(false);
-			vec.push_back(rweapon);
-		}
-
-		return vec;
-	}
-
 	auto RegisterFuncs(VM* a_vm) -> bool
 	{
 		if (!a_vm) {
@@ -464,7 +428,6 @@ namespace PapyrusActor
 		a_vm->RegisterFunction("GetCommandedActors"sv, PROJECT_NAME, GetCommandedActors);
 		a_vm->RegisterFunction("GetCommandingActor"sv, PROJECT_NAME, GetCommandingActor);
 		a_vm->RegisterFunction("GetEquippedAmmo"sv, PROJECT_NAME, GetEquippedAmmo);
-		a_vm->RegisterFunction("GetWornEquipmentInSlots"sv, PROJECT_NAME, GetWornEquipmentInSlots);
 
 		return true;
 	}
