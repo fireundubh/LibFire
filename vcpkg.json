@@ -10,7 +10,7 @@
     "spdlog",
     "commonlibsse-ng-flatrim"
   ],
-  "builtin-baseline": "c8a56fdc1594dfe134213c8c3edf1cc620e4fb37",
+  "builtin-baseline": "b98afc9f1192becb2f447cee485ce36ba111f9f6",
   "overrides": [
     {
       "name": "fmt",

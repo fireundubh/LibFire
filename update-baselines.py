@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 
 ENCODING = 'utf-8'
@@ -6,6 +7,7 @@ VCPKG_FILE = 'vcpkg.json'
 VCPKG_CFG_FILE = 'vcpkg-configuration.json'
 VCPKG_URL = r'https://github.com/microsoft/vcpkg.git/'
 VCPKG_COLORGLASS_URL = r'https://gitlab.com/colorglass/vcpkg-colorglass.git/'
+VCPKG_INSTALLATION_ROOT = os.path.expanduser(os.path.expandvars('%VCPKG_INSTALLATION_ROOT%'))
 
 
 def get_latest_baseline_commit(url: str, refs: str) -> str:
@@ -22,6 +24,23 @@ def get_latest_baseline_commit(url: str, refs: str) -> str:
             return commit
 
     return ''
+
+
+def update_local_vcpkg() -> bool:
+    os.chdir(VCPKG_INSTALLATION_ROOT)
+    process = subprocess.Popen(f'git pull --rebase origin',
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.DEVNULL,
+                               encoding=ENCODING,
+                               text=True,
+                               shell=False)
+
+    while process.poll() is None:
+        if line := process.stdout.readline().strip():
+            if line == 'Already up to date.':
+                return False
+
+    return True
 
 
 def run() -> None:
@@ -44,6 +63,9 @@ def run() -> None:
 
             with open(VCPKG_CFG_FILE, encoding=ENCODING, mode='w') as f:
                 json.dump(data, f, indent=2)
+
+            if update_local_vcpkg():
+                print('Updated local repo: "%s"' % VCPKG_INSTALLATION_ROOT)
 
 
 if __name__ == '__main__':
