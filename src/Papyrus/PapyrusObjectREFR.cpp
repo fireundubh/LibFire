@@ -188,7 +188,8 @@ namespace PapyrusObjectREFR
 		}
 
 		if (const auto actor = a_ref->As<RE::Actor>(); actor) {
-			const auto actorValue = ActorValueHelper::StringToActorValue(a_actorValue);
+			const auto actorValueId = ActorValueHelper::GetActorValueIdFromName(a_actorValue.c_str());
+			const auto actorValue = static_cast<RE::ActorValue>(actorValueId);
 			return actor->GetPermanentActorValue(actorValue);
 		}
 
