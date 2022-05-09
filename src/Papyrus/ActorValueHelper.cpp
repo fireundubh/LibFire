@@ -4,13 +4,6 @@
 
 namespace ActorValueHelper
 {
-	auto GetActorValueIdFromName(const char* a_name) -> std::int32_t
-	{
-		using func_t = decltype(&ActorValueHelper::GetActorValueIdFromName);
-		REL::Relocation<func_t> func{ RELOCATION_ID(26570, 27203) };
-		return func(a_name);
-	}
-
 	auto ActorValueToString(const RE::ActorValue a_actorValue) -> RE::BSFixedString
 	{
 		switch (a_actorValue) {
