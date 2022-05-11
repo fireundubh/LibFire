@@ -164,7 +164,7 @@ target_link_libraries(
         ${PROJECT_NAME}
         PUBLIC
             CommonLibSSE::CommonLibSSE
-            spdlog::spdlog_header_only
+            spdlog::spdlog
             fmt::fmt
         )
 
