@@ -270,7 +270,7 @@ namespace PapyrusString
 		return vec;
 	}
 
-	auto WrapString(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::BSFixedString a_string, std::uint32_t a_max_length) -> RE::BSFixedString
+	auto WrapString(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::BSFixedString a_string, std::int32_t a_max_length) -> RE::BSFixedString
 	{
 		auto S = std::string(a_string);
 
