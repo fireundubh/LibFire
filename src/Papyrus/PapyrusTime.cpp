@@ -26,8 +26,11 @@ namespace PapyrusTime
 			logger::info("PapyrusTime - cannot get VMState"sv);
 			return false;
 		}
+		
+		auto* plugin = SKSE::PluginDeclaration::GetSingleton();
+		auto project_name = plugin->GetName();
 
-		a_vm->RegisterFunction("GetCurrentHourOfDay"sv, PROJECT_NAME, GetCurrentHourOfDay);
+		a_vm->RegisterFunction("GetCurrentHourOfDay"sv, project_name, GetCurrentHourOfDay);
 
 		return true;
 	}

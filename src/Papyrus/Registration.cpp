@@ -1,10 +1,12 @@
 #include "Papyrus/Registration.h"
 
 #include "Papyrus/PapyrusActor.h"
+#include "Papyrus/PapyrusArray.h"
 #include "Papyrus/PapyrusFaction.h"
 #include "Papyrus/PapyrusExperiments.h"
 #include "Papyrus/PapyrusFormList.h"
 #include "Papyrus/PapyrusObjectREFR.h"
+#include "Papyrus/PapyrusPlayerCharacter.h"
 #include "Papyrus/PapyrusRace.h"
 #include "Papyrus/PapyrusSpell.h"
 #include "Papyrus/PapyrusString.h"
@@ -20,6 +22,9 @@ namespace Papyrus
 		papyrus->Register(PapyrusActor::RegisterFuncs);
 		logger::info("Registered actor functions"sv);
 
+		papyrus->Register(PapyrusArray::RegisterFuncs);
+		logger::info("Registered array functions"sv);
+
 		papyrus->Register(PapyrusFaction::RegisterFuncs);
 		logger::info("Registered faction functions"sv);
 
@@ -28,6 +33,9 @@ namespace Papyrus
 
 		papyrus->Register(PapyrusObjectREFR::RegisterFuncs);
 		logger::info("Registered object reference functions"sv);
+
+		papyrus->Register(PapyrusPlayerCharacter::RegisterFuncs);
+		logger::info("Registered player character functions"sv);
 
 		papyrus->Register(PapyrusRace::RegisterFuncs);
 		logger::info("Registered race functions"sv);

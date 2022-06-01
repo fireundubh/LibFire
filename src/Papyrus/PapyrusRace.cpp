@@ -190,28 +190,31 @@ namespace PapyrusRace
 			logger::info("PapyrusRace - cannot get VMState"sv);
 			return false;
 		}
+		
+		auto* plugin = SKSE::PluginDeclaration::GetSingleton();
+		auto project_name = plugin->GetName();
 
-		a_vm->RegisterFunction("GetRaceSkillBonus"sv, PROJECT_NAME, GetRaceSkillBonus);
-		a_vm->RegisterFunction("GetRaceSkills"sv, PROJECT_NAME, GetRaceSkills);
+		a_vm->RegisterFunction("GetRaceSkillBonus"sv, project_name, GetRaceSkillBonus);
+		a_vm->RegisterFunction("GetRaceSkills"sv, project_name, GetRaceSkills);
 
-		a_vm->RegisterFunction("GetRaceMaleHeight"sv, PROJECT_NAME, GetRaceMaleHeight);
-		a_vm->RegisterFunction("GetRaceMaleWeight"sv, PROJECT_NAME, GetRaceMaleWeight);
-		a_vm->RegisterFunction("GetRaceFemaleHeight"sv, PROJECT_NAME, GetRaceFemaleHeight);
-		a_vm->RegisterFunction("GetRaceFemaleWeight"sv, PROJECT_NAME, GetRaceFemaleWeight);
+		a_vm->RegisterFunction("GetRaceMaleHeight"sv, project_name, GetRaceMaleHeight);
+		a_vm->RegisterFunction("GetRaceMaleWeight"sv, project_name, GetRaceMaleWeight);
+		a_vm->RegisterFunction("GetRaceFemaleHeight"sv, project_name, GetRaceFemaleHeight);
+		a_vm->RegisterFunction("GetRaceFemaleWeight"sv, project_name, GetRaceFemaleWeight);
 
-		a_vm->RegisterFunction("GetRaceStartingHealth"sv, PROJECT_NAME, GetRaceStartingHealth);
-		a_vm->RegisterFunction("GetRaceStartingMagicka"sv, PROJECT_NAME, GetRaceStartingMagicka);
-		a_vm->RegisterFunction("GetRaceStartingStamina"sv, PROJECT_NAME, GetRaceStartingStamina);
+		a_vm->RegisterFunction("GetRaceStartingHealth"sv, project_name, GetRaceStartingHealth);
+		a_vm->RegisterFunction("GetRaceStartingMagicka"sv, project_name, GetRaceStartingMagicka);
+		a_vm->RegisterFunction("GetRaceStartingStamina"sv, project_name, GetRaceStartingStamina);
 
-		a_vm->RegisterFunction("GetRaceCarryWeight"sv, PROJECT_NAME, GetRaceCarryWeight);
-		a_vm->RegisterFunction("GetRaceMass"sv, PROJECT_NAME, GetRaceMass);
+		a_vm->RegisterFunction("GetRaceCarryWeight"sv, project_name, GetRaceCarryWeight);
+		a_vm->RegisterFunction("GetRaceMass"sv, project_name, GetRaceMass);
 
-		a_vm->RegisterFunction("GetRaceHealthRegen"sv, PROJECT_NAME, GetRaceHealthRegen);
-		a_vm->RegisterFunction("GetRaceMagickaRegen"sv, PROJECT_NAME, GetRaceMagickaRegen);
-		a_vm->RegisterFunction("GetRaceStaminaRegen"sv, PROJECT_NAME, GetRaceStaminaRegen);
+		a_vm->RegisterFunction("GetRaceHealthRegen"sv, project_name, GetRaceHealthRegen);
+		a_vm->RegisterFunction("GetRaceMagickaRegen"sv, project_name, GetRaceMagickaRegen);
+		a_vm->RegisterFunction("GetRaceStaminaRegen"sv, project_name, GetRaceStaminaRegen);
 
-		a_vm->RegisterFunction("GetRaceUnarmedDamage"sv, PROJECT_NAME, GetRaceUnarmedDamage);
-		a_vm->RegisterFunction("GetRaceUnarmedReach"sv, PROJECT_NAME, GetRaceUnarmedReach);
+		a_vm->RegisterFunction("GetRaceUnarmedDamage"sv, project_name, GetRaceUnarmedDamage);
+		a_vm->RegisterFunction("GetRaceUnarmedReach"sv, project_name, GetRaceUnarmedReach);
 
 		return true;
 	}

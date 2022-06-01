@@ -9,8 +9,6 @@
 #include <spdlog/sinks/msvc_sink.h>
 #endif
 
-#include "Constants.h"
-
 using namespace std::literals;
 
 namespace stl = SKSE::stl;

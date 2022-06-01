@@ -8,6 +8,9 @@ Int Function ActorFindAnyKeyword(Actor akActor, Keyword[] argKeywords) Global Na
 ; Returns the index of the first perk in `argPerks` assigned to `akActor` - if not found, -1 is returned
 Int Function ActorFindAnyPerk(Actor akActor, Perk[] argPerks) Global Native
 
+; Returns an array of factions that track crime and of which `akActor` is a current member
+Faction[] Function ActorFindCrimeFactions(Actor akActor) Global Native
+
 ; Returns whether `akActor` has any keyword in `akKeywords`
 Bool Function ActorHasAnyKeyword(Actor akActor, FormList akKeywords) Global Native
 
@@ -47,13 +50,56 @@ Actor Function GetCommandingActor(Actor akActor) Global Native
 ; Returns the ammo currently used by `akActor`
 Ammo Function GetEquippedAmmo(Actor akActor) Global Native
 
+{ Array }
+
+; Searches `argActors` for closest actor to `akOrigin` and returns index of member - if not found, -1 is returned
+Int Function ArrayFindClosestActor(Actor[] argActors, ObjectReference akOrigin) Global Native
+
+; Searches `argHaystack` for `afValue` and returns index of member - if not found, -1 is returned
+Int Function ArrayFindGlobalValue(GlobalVariable[] argGlobals, Float afValue) Global Native
+
 { Faction }
+
+; Returns flag values for `akFaction`
+Bool Function GetFactionIgnoresMurder(Faction akFaction) Global Native
+Bool Function GetFactionIgnoresAssault(Faction akFaction) Global Native
+Bool Function GetFactionIgnoresTrespass(Faction akFaction) Global Native
+Bool Function GetFactionIgnoresPickpocket(Faction akFaction) Global Native
+Bool Function GetFactionIgnoresStealing(Faction akFaction) Global Native
+Bool Function GetFactionIgnoresWerewolf(Faction akFaction) Global Native
+Bool Function GetFactionReportsCrimesAgainstMembers(Faction akFaction) Global Native
+Bool Function GetFactionTracksCrime(Faction akFaction) Global Native
+Bool Function GetFactionUsesCrimeGoldDefaults(Faction akFaction) Global Native
+
+; Returns crime value (murder, assault, etc.) for `akFaction` at `aiMember` offset
+; Valid offsets:
+;   - 0x0  Arrest (cast to Boolean)
+;   - 0x01 Attack On Sight (cast to Boolean)
+;   - 0x02 Murder (cast to Int)
+;   - 0x04 Assault (cast to Int)
+;   - 0x06 Trespass (cast to Int)
+;   - 0x08 Pickpocket (cast to Int)
+;   - 0x0C Steal Multiplier (Float)
+;   - 0x10 Escape (cast to Int)
+;   - 0x12 Werewolf (cast to Int)
+Float Function GetFactionCrimeValue(Faction akFaction, Int aiMember) Global Native
 
 ; Sets `akFaction` as ally or friend to each faction in `akFactions`
 Function SetAllies(Faction akFaction, FormList akFactions, Bool abSelfIsFriendToOther = False, Bool abOtherIsFriendToSelf = False) Global Native
 
 ; Sets `akFaction` as enemy or neutral to each faction in `akFactions`
 Function SetEnemies(Faction akFaction, FormList akFactions, Bool abSelfIsNeutralToOther = False, Bool abOtherIsNeutralToSelf = False) Global Native
+
+; Copies violent and nonviolent crime gold from `akFaction` to `akOtherFaction`. If `abModify` is True,
+;   adds crime gold values to existing values instead.
+Function CopyFactionCrimeGold(Faction akFaction, Faction akOtherFaction, Bool abModify) Global Native
+
+; Zeroes out violent and nonviolent crime gold on `akFaction`
+Function ResetFactionCrimeGold(Faction akFaction) Global Native
+
+; Clears cached faction fight reactions (sometimes required to update faction actors)
+;   Note: SetAllies and SetEnemies already clears the faction reactions cache.
+Bool Function ClearFactionReactionsCache() Global Native
 
 { FormList }
 
@@ -65,8 +111,23 @@ Bool[] Function SearchListsForForm(FormList akHaystack, Form akNeedle) Global Na
 
 { ObjectReference }
 
+; Returns closest actor within `afRadius` of and line of sight to `akOrigin`
+Actor Function FindClosestActorByLOS(ObjectReference akOrigin, Float afRadius) Global Native
+
+; Returns closest actor who is a member of `akFaction` within `afRadius` of `akOrigin`
+Actor Function FindClosestActorInFaction(ObjectReference akOrigin, Faction akFaction, Float afRadius) Global Native
+
+; Returns closest actor who is a member of `akFaction` within `afRadius` of and line of sight to `akOrigin`
+Actor Function FindClosestActorInFactionByLOS(ObjectReference akOrigin, Faction akFaction, Float afRadius) Global Native
+
 ; Returns actors in loaded cells within `afRadius` of `akOrigin`
 Actor[] Function FindNearbyActors(ObjectReference akOrigin, Float afRadius) Global Native
+
+; Returns actors who are members of `akFaction` in loaded cells within `afRadius` of `akOrigin`
+Actor[] Function FindNearbyActorsInFaction(ObjectReference akOrigin, Faction akFaction, Float afRadius) Global Native
+
+; Returns actors who are members of `akFaction` in loaded cells within `afRadius` of and line of sight to `akOrigin`
+Actor[] Function FindNearbyActorsInFactionByLOS(ObjectReference akOrigin, Faction akFaction, Float afRadius) Global Native
 
 ; Returns books in loaded cells within `afRadius` of `akOrigin`
 ObjectReference[] Function FindNearbyBooks(ObjectReference akOrigin, Float afRadius) Global Native
@@ -85,6 +146,20 @@ Actor[] Function FindNearbyTeammates(Float afRadius) Global Native
 
 ; Returns the permanent value of `asActorValue` for `akActor`
 Float Function GetPermanentActorValue(ObjectReference akActor, String asActorValue) Global Native
+
+{ Player Character }
+
+; Returns an array of factions with which the player is infamous
+Faction[] Function FindPlayerInfamousWithFactions() Global Native
+
+; Returns an array of factions to which the player owes crime gold
+Faction[] Function FindPlayerWantedByFactions() Global Native
+
+; Returns whether the player is infamous with any faction
+Bool Function IsPlayerInfamous() Global Native
+
+; Returns whether the player is wanted by any faction
+Bool Function IsPlayerWanted() Global Native
 
 { Race }
 

@@ -64,9 +64,12 @@ namespace PapyrusFormList
 			logger::info("PapyrusFormList - cannot get VMState"sv);
 			return false;
 		}
+		
+		auto* plugin = SKSE::PluginDeclaration::GetSingleton();
+		auto project_name = plugin->GetName();
 
-		a_vm->RegisterFunction("SearchListForForms"sv, PROJECT_NAME, SearchListForForms);
-		a_vm->RegisterFunction("SearchListsForForm"sv, PROJECT_NAME, SearchListsForForm);
+		a_vm->RegisterFunction("SearchListForForms"sv, project_name, SearchListForForms);
+		a_vm->RegisterFunction("SearchListsForForm"sv, project_name, SearchListsForForm);
 
 		return true;
 	}

@@ -109,9 +109,12 @@ namespace PapyrusExperiments
 			logger::info("PapyrusExperiments - cannot get VMState"sv);
 			return false;
 		}
+		
+		auto* plugin = SKSE::PluginDeclaration::GetSingleton();
+		auto project_name = plugin->GetName();
 
-		a_vm->RegisterFunction("FindContainedFormsOfFormType"sv, PROJECT_NAME, FindContainedFormsOfFormType);
-		a_vm->RegisterFunction("SetContainedFormDisplayNames"sv, PROJECT_NAME, SetContainedFormDisplayNames);
+		a_vm->RegisterFunction("FindContainedFormsOfFormType"sv, project_name, FindContainedFormsOfFormType);
+		a_vm->RegisterFunction("SetContainedFormDisplayNames"sv, project_name, SetContainedFormDisplayNames);
 
 		return true;
 	}

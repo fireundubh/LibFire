@@ -1,9 +1,8 @@
 ﻿#include "Papyrus/Registration.h"
-#include "Version.h"
 
 namespace
 {
-	void InitializeLog()
+	void InitializeLog(const std::string_view a_project)
 	{
 #ifndef NDEBUG
 		auto sink = std::make_shared<spdlog::sinks::msvc_sink_mt>();
@@ -13,7 +12,7 @@ namespace
 			util::report_and_fail("Failed to find standard logging directory"sv);
 		}
 
-		*path /= fmt::format("{}.log"sv, PROJECT_NAME);
+		*path /= fmt::format("{}.log"sv, a_project);
 		auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(path->string(), true);
 #endif
 
@@ -32,48 +31,20 @@ namespace
 	}
 }
 
-// This export is only loaded by SKSE for 1.5 and below
-extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
+SKSEPluginLoad(const SKSE::LoadInterface* a_skse)
 {
-	a_info->infoVersion = SKSE::PluginInfo::kVersion;
-	a_info->name = PROJECT_NAME;
-	a_info->version = FIRE_VERSION_MAJOR;
+	auto* plugin = SKSE::PluginDeclaration::GetSingleton();
+	auto project_name = plugin->GetName();
+	auto project_version = plugin->GetVersion();
 
-	if (a_skse->IsEditor()) {
-		logger::critical("Loaded in editor, marking as incompatible"sv);
-		return false;
-	}
+	InitializeLog(project_name);
 
-	const auto ver = a_skse->RuntimeVersion();
-	if (ver < SKSE::RUNTIME_SSE_1_5_97 ) {
-		logger::critical(FMT_STRING("Unsupported runtime version {}"), ver.string());
-		return false;
-	}
-
-	return true;
-}
-
-// This export is only loaded by SKSE for 1.6 and up.
-extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
-	SKSE::PluginVersionData v;
-
-	v.PluginName(PROJECT_NAME);
-	v.PluginVersion(FIRE_VERSION_MAJOR);
-	v.AuthorName("fireundubh");
-	v.UsesAddressLibrary(true);
-	v.CompatibleVersions({ SKSE::RUNTIME_SSE_LATEST_AE, SKSE::RUNTIME_SSE_1_5_97 });
-
-	return v;
-}();
-
-extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
-{
-	InitializeLog();
-	logger::info("{} v{}"sv, PROJECT_NAME, FIRE_VERSION_VERSTRING);
+	logger::info("{} v{} is loading..."sv, project_name, project_version);
 
 	Init(a_skse);
 
 	Papyrus::Register();
 
+	logger::info("{} has finished loading."sv, project_name);
 	return true;
 }

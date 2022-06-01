@@ -35,8 +35,11 @@ namespace PapyrusSpell
 			logger::info("PapyrusSpell - cannot get VMState"sv);
 			return false;
 		}
+		
+		auto* plugin = SKSE::PluginDeclaration::GetSingleton();
+		auto project_name = plugin->GetName();
 
-		a_vm->RegisterFunction("GetHighestMinSkillLevelForSpell"sv, PROJECT_NAME, GetHighestMinSkillLevelForSpell);
+		a_vm->RegisterFunction("GetHighestMinSkillLevelForSpell"sv, project_name, GetHighestMinSkillLevelForSpell);
 
 		return true;
 	}

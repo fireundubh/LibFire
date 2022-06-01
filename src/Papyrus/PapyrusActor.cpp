@@ -94,6 +94,25 @@ namespace PapyrusActor
 		return false;
 	}
 
+	auto ActorFindCrimeFactions(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor) -> std::vector<RE::TESFaction*>
+	{
+		std::vector<RE::TESFaction*> results;
+
+		if (!a_actor) {
+			a_vm->TraceStack("akActor cannot be None", a_stackID, Severity::kInfo);
+			return results;
+		}
+
+		a_actor->VisitFactions([&](RE::TESFaction* faction, int8_t rank) -> bool {
+			if (rank > -1 && faction->TracksCrimes()) {
+				results.emplace_back(faction);
+			}
+			return true;
+		});
+
+		return results;
+	}
+
 	auto ActorHasPerkRank(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::Actor* a_actor, RE::BGSPerk* a_perk, std::int32_t a_rank) -> bool
 	{
 		if (!a_actor) {
@@ -147,8 +166,7 @@ namespace PapyrusActor
 			return false;
 		}
 
-		if (const auto commandingActorHandle = a_actor->GetCommandingActor(); commandingActorHandle) {
-			const auto commandingActorPtr = commandingActorHandle.get();
+		if (const auto commandingActorPtr = a_actor->GetCommandingActor(); commandingActorPtr) {
 			const auto commandingActor = commandingActorPtr.get();
 
 			return commandingActor != nullptr && commandingActor == a_otherActor;
@@ -169,8 +187,7 @@ namespace PapyrusActor
 		}
 
 		if (auto player = RE::PlayerCharacter::GetSingleton(); player) {
-			if (const auto commandingActorHandle = a_actor->GetCommandingActor(); commandingActorHandle) {
-				const auto commandingActorPtr = commandingActorHandle.get();
+			if (const auto commandingActorPtr = a_actor->GetCommandingActor(); commandingActorPtr) {
 				const auto commandingActor = commandingActorPtr.get();
 
 				return commandingActor != nullptr && commandingActor == player;
@@ -193,8 +210,7 @@ namespace PapyrusActor
 
 		if (a_actor->IsCommandedActor() || a_actor->IsSummoned()) {
 			if (auto player = RE::PlayerCharacter::GetSingleton(); player) {
-				if (const auto commandingActorHandle = a_actor->GetCommandingActor(); commandingActorHandle) {
-					const auto commandingActorPtr = commandingActorHandle.get();
+				if (const auto commandingActorPtr = a_actor->GetCommandingActor(); commandingActorPtr) {
 					const auto commandingActor = commandingActorPtr.get();
 
 					return commandingActor != nullptr && commandingActor == player;
@@ -386,8 +402,7 @@ namespace PapyrusActor
 			return nullptr;
 		}
 
-		if (const auto commandingActorHandle = a_actor->GetCommandingActor(); commandingActorHandle) {
-			const auto commandingActorPtr = commandingActorHandle.get();
+		if (const auto commandingActorPtr = a_actor->GetCommandingActor(); commandingActorPtr) {
 			const auto commandingActor = commandingActorPtr.get();
 
 			return commandingActor;
@@ -412,22 +427,26 @@ namespace PapyrusActor
 			logger::info("PapyrusActor - couldn't get VMState"sv);
 			return false;
 		}
+		
+		auto* plugin = SKSE::PluginDeclaration::GetSingleton();
+		auto project_name = plugin->GetName();
 
-		a_vm->RegisterFunction("ActorFindAnyKeyword"sv, PROJECT_NAME, ActorFindAnyKeyword);
-		a_vm->RegisterFunction("ActorFindAnyPerk"sv, PROJECT_NAME, ActorFindAnyPerk);
-		a_vm->RegisterFunction("ActorHasAnyKeyword"sv, PROJECT_NAME, ActorHasAnyKeyword);
-		a_vm->RegisterFunction("ActorHasPerkRank"sv, PROJECT_NAME, ActorHasPerkRank);
-		a_vm->RegisterFunction("ActorIsCommandedBy"sv, PROJECT_NAME, ActorIsCommandedBy);
-		a_vm->RegisterFunction("ActorIsCommandedByPlayer"sv, PROJECT_NAME, ActorIsCommandedByPlayer);
-		a_vm->RegisterFunction("ActorIsFollower"sv, PROJECT_NAME, ActorIsFollower);
-		a_vm->RegisterFunction("ActorIsInAnyFaction"sv, PROJECT_NAME, ActorIsInAnyFaction);
-		a_vm->RegisterFunction("ActorIsInFaction"sv, PROJECT_NAME, ActorIsInFaction);
-		a_vm->RegisterFunction("ActorIsSummoned"sv, PROJECT_NAME, ActorIsSummoned);
-		a_vm->RegisterFunction("GetActorPerkRank"sv, PROJECT_NAME, GetActorPerkRank);
-		a_vm->RegisterFunction("GetActorPerks"sv, PROJECT_NAME, GetActorPerks);
-		a_vm->RegisterFunction("GetCommandedActors"sv, PROJECT_NAME, GetCommandedActors);
-		a_vm->RegisterFunction("GetCommandingActor"sv, PROJECT_NAME, GetCommandingActor);
-		a_vm->RegisterFunction("GetEquippedAmmo"sv, PROJECT_NAME, GetEquippedAmmo);
+		a_vm->RegisterFunction("ActorFindAnyKeyword"sv, project_name, ActorFindAnyKeyword);
+		a_vm->RegisterFunction("ActorFindAnyPerk"sv, project_name, ActorFindAnyPerk);
+		a_vm->RegisterFunction("ActorFindCrimeFactions"sv, project_name, ActorFindCrimeFactions);
+		a_vm->RegisterFunction("ActorHasAnyKeyword"sv, project_name, ActorHasAnyKeyword);
+		a_vm->RegisterFunction("ActorHasPerkRank"sv, project_name, ActorHasPerkRank);
+		a_vm->RegisterFunction("ActorIsCommandedBy"sv, project_name, ActorIsCommandedBy);
+		a_vm->RegisterFunction("ActorIsCommandedByPlayer"sv, project_name, ActorIsCommandedByPlayer);
+		a_vm->RegisterFunction("ActorIsFollower"sv, project_name, ActorIsFollower);
+		a_vm->RegisterFunction("ActorIsInAnyFaction"sv, project_name, ActorIsInAnyFaction);
+		a_vm->RegisterFunction("ActorIsInFaction"sv, project_name, ActorIsInFaction);
+		a_vm->RegisterFunction("ActorIsSummoned"sv, project_name, ActorIsSummoned);
+		a_vm->RegisterFunction("GetActorPerkRank"sv, project_name, GetActorPerkRank);
+		a_vm->RegisterFunction("GetActorPerks"sv, project_name, GetActorPerks);
+		a_vm->RegisterFunction("GetCommandedActors"sv, project_name, GetCommandedActors);
+		a_vm->RegisterFunction("GetCommandingActor"sv, project_name, GetCommandingActor);
+		a_vm->RegisterFunction("GetEquippedAmmo"sv, project_name, GetEquippedAmmo);
 
 		return true;
 	}

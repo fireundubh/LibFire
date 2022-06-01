@@ -1,11 +1,164 @@
 #pragma once
 
-#include "ActorValueHelper.h"
-
 #include "PapyrusObjectREFR.h"
 
 namespace PapyrusObjectREFR
 {
+	auto FindClosestActorByLOS(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::TESObjectREFR* a_origin, float a_radius) -> RE::Actor*
+	{
+		if (!a_origin) {
+			a_vm->TraceStack("akOrigin cannot be None", a_stackID, Severity::kInfo);
+			return nullptr;
+		}
+
+		std::vector<RE::Actor*> vec;
+
+		if (const auto TES = RE::TES::GetSingleton(); TES) {
+			const auto formType = RE::FormType::NPC;
+
+			if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_origin) {
+				bool codePath = false;
+
+				TES->ForEachReferenceInRange(a_origin, a_radius, [&](RE::TESObjectREFR& a_ref) {
+					auto base = a_ref.GetBaseObject();
+					if (a_ref.As<RE::TESObjectREFR>() != a_origin && (a_ref.Is(formType) || base && base->Is(formType))) {
+						if (auto actor = a_ref.As<RE::Actor>(); actor && actor->HasLineOfSight(a_origin, codePath)) {
+							vec.push_back(actor);
+						}
+					}
+					return true;
+				});
+			}
+			else {
+				bool codePath = true;
+
+				TES->ForEachReferenceInRange(a_origin, a_radius, [&](RE::TESObjectREFR& a_ref) {
+					auto base = a_ref.GetBaseObject();
+					if (a_ref.As<RE::TESObjectREFR>() != a_origin && (a_ref.Is(formType) || base && base->Is(formType))) {
+						if (auto actor = a_ref.As<RE::Actor>(); actor && actor->HasLineOfSight(a_origin, codePath)) {
+							vec.push_back(actor);
+						}
+					}
+					return true;
+				});
+			}
+		}
+
+		if (vec.empty())
+			return nullptr;
+
+		if (vec.size() == 1)
+			return vec.front();
+
+		std::multimap<float, RE::Actor*> results;
+
+		for (auto* actor : vec) {
+			auto distance = a_origin->As<RE::NiPoint3>()->GetSquaredDistance(actor->GetPosition());
+			results.insert(std::pair<float, RE::Actor*>(distance, actor));
+		}
+
+		return results.cbegin()->second;
+	}
+
+	auto FindClosestActorInFaction(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::TESObjectREFR* a_origin, RE::TESFaction* a_faction, float a_radius) -> RE::Actor*
+	{
+		if (!a_origin) {
+			a_vm->TraceStack("akOrigin cannot be None", a_stackID, Severity::kInfo);
+			return nullptr;
+		}
+
+		if (!a_faction) {
+			a_vm->TraceStack("akFaction cannot be None", a_stackID, Severity::kInfo);
+			return nullptr;
+		}
+
+		std::vector<RE::Actor*> vec;
+
+		if (const auto TES = RE::TES::GetSingleton(); TES) {
+			const auto formType = RE::FormType::NPC;
+
+			TES->ForEachReferenceInRange(a_origin, a_radius, [&](RE::TESObjectREFR& a_ref) {
+				auto base = a_ref.GetBaseObject();
+				if (a_ref.As<RE::TESObjectREFR>() != a_origin && (a_ref.Is(formType) || base && base->Is(formType))) {
+					if (auto actor = a_ref.As<RE::Actor>(); actor && actor->IsInFaction(a_faction)) {
+						vec.push_back(actor);
+					}
+				}
+				return true;
+			});
+		}
+
+		if (vec.empty())
+			return nullptr;
+
+		if (vec.size() == 1)
+			return vec.front();
+
+		std::multimap<float, RE::Actor*> results;
+
+		for (auto* actor : vec) {
+			auto distance = a_origin->As<RE::NiPoint3>()->GetSquaredDistance(actor->GetPosition());
+			results.insert(std::pair<float, RE::Actor*>(distance, actor));
+		}
+
+		return results.cbegin()->second;
+	}
+
+	auto FindClosestActorInFactionByLOS(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::TESObjectREFR* a_origin, RE::TESFaction* a_faction, float a_radius) -> RE::Actor*
+	{
+		if (!a_origin) {
+			a_vm->TraceStack("akOrigin cannot be None", a_stackID, Severity::kInfo);
+			return nullptr;
+		}
+
+		std::vector<RE::Actor*> vec;
+
+		if (const auto TES = RE::TES::GetSingleton(); TES) {
+			const auto formType = RE::FormType::NPC;
+
+			if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_origin) {
+				bool codePath = false;
+
+				TES->ForEachReferenceInRange(a_origin, a_radius, [&](RE::TESObjectREFR& a_ref) {
+					auto base = a_ref.GetBaseObject();
+					if (a_ref.As<RE::TESObjectREFR>() != a_origin && (a_ref.Is(formType) || base && base->Is(formType))) {
+						if (auto actor = a_ref.As<RE::Actor>(); actor && actor->IsInFaction(a_faction) && actor->HasLineOfSight(a_origin, codePath)) {
+							vec.push_back(actor);
+						}
+					}
+					return true;
+				});
+			} else {
+				bool codePath = true;
+
+				TES->ForEachReferenceInRange(a_origin, a_radius, [&](RE::TESObjectREFR& a_ref) {
+					auto base = a_ref.GetBaseObject();
+					if (a_ref.As<RE::TESObjectREFR>() != a_origin && (a_ref.Is(formType) || base && base->Is(formType))) {
+						if (auto actor = a_ref.As<RE::Actor>(); actor && actor->IsInFaction(a_faction) && actor->HasLineOfSight(a_origin, codePath)) {
+							vec.push_back(actor);
+						}
+					}
+					return true;
+				});
+			}
+		}
+
+		if (vec.empty())
+			return nullptr;
+
+		if (vec.size() == 1)
+			return vec.front();
+
+		std::multimap<float, RE::Actor*> results;
+
+		for (auto* actor : vec) {
+			auto distance = a_origin->As<RE::NiPoint3>()->GetSquaredDistance(actor->GetPosition());
+			results.insert(std::pair<float, RE::Actor*>(distance, actor));
+		}
+
+		return results.cbegin()->second;
+	}
+
 	auto FindNearbyActors(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::TESObjectREFR* a_origin, float a_radius) -> std::vector<RE::Actor*>
 	{
 		std::vector<RE::Actor*> vec;
@@ -27,6 +180,74 @@ namespace PapyrusObjectREFR
 				}
 				return true;
 			});
+		}
+
+		return vec;
+	}
+
+	auto FindNearbyActorsInFaction(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::TESObjectREFR* a_origin, RE::TESFaction* a_faction, float a_radius) -> std::vector<RE::Actor*>
+	{
+		std::vector<RE::Actor*> vec;
+
+		if (!a_origin) {
+			a_vm->TraceStack("akOrigin cannot be None", a_stackID, Severity::kInfo);
+			return vec;
+		}
+
+		if (const auto TES = RE::TES::GetSingleton(); TES) {
+			const auto formType = RE::FormType::NPC;
+
+			TES->ForEachReferenceInRange(a_origin, a_radius, [&](RE::TESObjectREFR& a_ref) {
+				auto base = a_ref.GetBaseObject();
+				if (a_ref.As<RE::TESObjectREFR>() != a_origin && (a_ref.Is(formType) || base && base->Is(formType))) {
+					if (auto actor = a_ref.As<RE::Actor>(); actor && actor->IsInFaction(a_faction)) {
+						vec.push_back(actor);
+					}
+				}
+				return true;
+			});
+		}
+
+		return vec;
+	}
+
+	auto FindNearbyActorsInFactionByLOS(VM* a_vm, StackID a_stackID, RE::StaticFunctionTag*, RE::TESObjectREFR* a_origin, RE::TESFaction* a_faction, float a_radius) -> std::vector<RE::Actor*>
+	{
+		std::vector<RE::Actor*> vec;
+
+		if (!a_origin) {
+			a_vm->TraceStack("akOrigin cannot be None", a_stackID, Severity::kInfo);
+			return vec;
+		}
+
+		if (const auto TES = RE::TES::GetSingleton(); TES) {
+			const auto formType = RE::FormType::NPC;
+
+			if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_origin) {
+				bool codePath = false;
+
+				TES->ForEachReferenceInRange(a_origin, a_radius, [&](RE::TESObjectREFR& a_ref) {
+					auto base = a_ref.GetBaseObject();
+					if (a_ref.As<RE::TESObjectREFR>() != a_origin && (a_ref.Is(formType) || base && base->Is(formType))) {
+						if (auto actor = a_ref.As<RE::Actor>(); actor && actor->IsInFaction(a_faction) && actor->HasLineOfSight(a_origin, codePath)) {
+							vec.push_back(actor);
+						}
+					}
+					return true;
+				});
+			} else {
+				bool codePath = true;
+
+				TES->ForEachReferenceInRange(a_origin, a_radius, [&](RE::TESObjectREFR& a_ref) {
+					auto base = a_ref.GetBaseObject();
+					if (a_ref.As<RE::TESObjectREFR>() != a_origin && (a_ref.Is(formType) || base && base->Is(formType))) {
+						if (auto actor = a_ref.As<RE::Actor>(); actor && actor->IsInFaction(a_faction) && actor->HasLineOfSight(a_origin, codePath)) {
+							vec.push_back(actor);
+						}
+					}
+					return true;
+				});
+			}
 		}
 
 		return vec;
@@ -73,8 +294,7 @@ namespace PapyrusObjectREFR
 				if (a_ref.As<RE::TESObjectREFR>() != a_origin && (a_ref.Is(formType) || base && base->Is(formType))) {
 					if (auto actor = a_ref.As<RE::Actor>(); actor) {
 						if (actor->IsCommandedActor()) {
-							if (const auto commandingActorHandle = actor->GetCommandingActor(); commandingActorHandle) {
-								const auto commandingActorPtr = commandingActorHandle.get();
+							if (const auto commandingActorPtr = actor->GetCommandingActor(); commandingActorPtr) {
 								const auto commandingActor = commandingActorPtr.get();
 
 								if (commandingActor != nullptr && commandingActor == a_origin) {
@@ -106,8 +326,7 @@ namespace PapyrusObjectREFR
 							if (actor->IsPlayerTeammate()) {
 								vec.push_back(actor);
 							} else if (actor->IsCommandedActor() || actor->IsSummoned()) {
-								if (const auto commandingActorHandle = actor->GetCommandingActor(); commandingActorHandle) {
-									const auto commandingActorPtr = commandingActorHandle.get();
+								if (const auto commandingActorPtr = actor->GetCommandingActor(); commandingActorPtr) {
 									const auto commandingActor = commandingActorPtr.get();
 
 									if (commandingActor != nullptr && commandingActor == player) {
@@ -202,14 +421,22 @@ namespace PapyrusObjectREFR
 			logger::info("PapyrusObjectREFR - couldn't get VMState"sv);
 			return false;
 		}
+		
+		auto* plugin = SKSE::PluginDeclaration::GetSingleton();
+		auto project_name = plugin->GetName();
 
-		a_vm->RegisterFunction("FindNearbyActors"sv, PROJECT_NAME, FindNearbyActors);
-		a_vm->RegisterFunction("FindNearbyBooks"sv, PROJECT_NAME, FindNearbyBooks);
-		a_vm->RegisterFunction("FindNearbyCommandedActors"sv, PROJECT_NAME, FindNearbyCommandedActors);
-		a_vm->RegisterFunction("FindNearbyFollowers"sv, PROJECT_NAME, FindNearbyFollowers);
-		a_vm->RegisterFunction("FindNearbySummons"sv, PROJECT_NAME, FindNearbySummons);
-		a_vm->RegisterFunction("FindNearbyTeammates"sv, PROJECT_NAME, FindNearbyTeammates);
-		a_vm->RegisterFunction("GetPermanentActorValue"sv, PROJECT_NAME, GetPermanentActorValue);
+		a_vm->RegisterFunction("FindClosestActorByLOS"sv, project_name, FindClosestActorByLOS);
+		a_vm->RegisterFunction("FindClosestActorInFaction"sv, project_name, FindClosestActorInFaction);
+		a_vm->RegisterFunction("FindClosestActorInFactionByLOS"sv, project_name, FindClosestActorInFactionByLOS);
+		a_vm->RegisterFunction("FindNearbyActors"sv, project_name, FindNearbyActors);
+		a_vm->RegisterFunction("FindNearbyActorsInFaction"sv, project_name, FindNearbyActorsInFaction);
+		a_vm->RegisterFunction("FindNearbyActorsInFactionByLOS"sv, project_name, FindNearbyActorsInFactionByLOS);
+		a_vm->RegisterFunction("FindNearbyBooks"sv, project_name, FindNearbyBooks);
+		a_vm->RegisterFunction("FindNearbyCommandedActors"sv, project_name, FindNearbyCommandedActors);
+		a_vm->RegisterFunction("FindNearbyFollowers"sv, project_name, FindNearbyFollowers);
+		a_vm->RegisterFunction("FindNearbySummons"sv, project_name, FindNearbySummons);
+		a_vm->RegisterFunction("FindNearbyTeammates"sv, project_name, FindNearbyTeammates);
+		a_vm->RegisterFunction("GetPermanentActorValue"sv, project_name, GetPermanentActorValue);
 
 		return true;
 	}

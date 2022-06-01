@@ -288,16 +288,19 @@ namespace PapyrusString
 			logger::info("PapyrusString - cannot get VMState"sv);
 			return false;
 		}
+		
+		auto* plugin = SKSE::PluginDeclaration::GetSingleton();
+		auto project_name = plugin->GetName();
 
-		a_vm->RegisterFunction("ContainsText"sv, PROJECT_NAME, ContainsText);
-		a_vm->RegisterFunction("FormatFloat"sv, PROJECT_NAME, FormatFloat);
-		a_vm->RegisterFunction("FormatInt"sv, PROJECT_NAME, FormatInt);
-		a_vm->RegisterFunction("FormatString"sv, PROJECT_NAME, FormatString);
-		a_vm->RegisterFunction("IntToHex"sv, PROJECT_NAME, IntToHex);
-		a_vm->RegisterFunction("SplitString"sv, PROJECT_NAME, SplitString);
-		a_vm->RegisterFunction("StrToFloatArray"sv, PROJECT_NAME, StrToFloatArray);
-		a_vm->RegisterFunction("StrToIntArray"sv, PROJECT_NAME, StrToIntArray);
-		a_vm->RegisterFunction("WrapString"sv, PROJECT_NAME, WrapString);
+		a_vm->RegisterFunction("ContainsText"sv, project_name, ContainsText);
+		a_vm->RegisterFunction("FormatFloat"sv, project_name, FormatFloat);
+		a_vm->RegisterFunction("FormatInt"sv, project_name, FormatInt);
+		a_vm->RegisterFunction("FormatString"sv, project_name, FormatString);
+		a_vm->RegisterFunction("IntToHex"sv, project_name, IntToHex);
+		a_vm->RegisterFunction("SplitString"sv, project_name, SplitString);
+		a_vm->RegisterFunction("StrToFloatArray"sv, project_name, StrToFloatArray);
+		a_vm->RegisterFunction("StrToIntArray"sv, project_name, StrToIntArray);
+		a_vm->RegisterFunction("WrapString"sv, project_name, WrapString);
 
 		return true;
 	}
