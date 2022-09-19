@@ -3,7 +3,6 @@
 #include "Papyrus/PapyrusActor.h"
 #include "Papyrus/PapyrusArray.h"
 #include "Papyrus/PapyrusFaction.h"
-#include "Papyrus/PapyrusExperiments.h"
 #include "Papyrus/PapyrusFormList.h"
 #include "Papyrus/PapyrusObjectREFR.h"
 #include "Papyrus/PapyrusPlayerCharacter.h"
@@ -48,8 +47,5 @@ namespace Papyrus
 
 		papyrus->Register(PapyrusTime::RegisterFuncs);
 		logger::info("Registered time functions"sv);
-
-		papyrus->Register(PapyrusExperiments::RegisterFuncs);
-		logger::info("Registered experimental functions"sv);
 	}
 }

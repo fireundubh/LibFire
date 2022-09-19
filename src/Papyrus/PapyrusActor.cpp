@@ -40,7 +40,7 @@ namespace PapyrusActor
 		}
 
 		if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_actor) {
-			if (const auto perkArray = player->addedPerks; !perkArray.empty()) {
+			if (const auto perkArray = player->GetPlayerRuntimeData().addedPerks; !perkArray.empty()) {
 				for (auto perkData : perkArray) {
 					if (const auto perk = perkData->perk; perk) {
 						if (auto it = std::find(a_perks.begin(), a_perks.end(), perk); it != a_perks.end()) {
@@ -126,7 +126,7 @@ namespace PapyrusActor
 		}
 
 		if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_actor) {
-			if (const auto perkArray = player->addedPerks; !perkArray.empty()) {
+			if (const auto perkArray = player->GetPlayerRuntimeData().addedPerks; !perkArray.empty()) {
 				for (auto perkData : perkArray) {
 					if (const auto perk = perkData->perk; perk && a_perk == perk && a_rank == static_cast<std::int32_t>(perkData->currentRank)) {
 						return true;
@@ -306,7 +306,7 @@ namespace PapyrusActor
 		}
 
 		if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_actor) {
-			if (const auto perkArray = player->addedPerks; !perkArray.empty()) {
+			if (const auto perkArray = player->GetPlayerRuntimeData().addedPerks; !perkArray.empty()) {
 				for (auto perkData : perkArray) {
 					if (const auto perk = perkData->perk; perk && a_perk == perk) {
 						return static_cast<std::int32_t>(perkData->currentRank);
@@ -340,7 +340,7 @@ namespace PapyrusActor
 		}
 
 		if (auto player = RE::PlayerCharacter::GetSingleton(); player == a_actor) {
-			if (const auto perkArray = player->addedPerks; !perkArray.empty()) {
+			if (const auto perkArray = player->GetPlayerRuntimeData().addedPerks; !perkArray.empty()) {
 				for (auto perkData : perkArray) {
 					if (const auto perk = perkData->perk; perk) {
 						result.emplace_back(perk);
@@ -373,7 +373,7 @@ namespace PapyrusActor
 			return result;
 		}
 
-		if (const auto currentProcess = a_actor->currentProcess; currentProcess) {
+		if (const auto currentProcess = a_actor->GetActorRuntimeData().currentProcess; currentProcess) {
 			if (const auto middleProcess = currentProcess->middleHigh; middleProcess) {
 				if (const auto commandedActors = middleProcess->commandedActors; !commandedActors.empty()) {
 					for (const auto& commandedActorData : commandedActors) {

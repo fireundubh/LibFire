@@ -7,10 +7,9 @@
   "dependencies": [
     "boost-stl-interfaces",
     "rsm-binary-io",
-    "spdlog",
     "commonlibsse-ng-flatrim"
   ],
-  "builtin-baseline": "d953973cfbfeaf8022f5219fbabb0bdf9defb706",
+  "builtin-baseline": "01b29f6d8212bc845da64773b18665d682f5ab66",
   "overrides": [
     {
       "name": "fmt",

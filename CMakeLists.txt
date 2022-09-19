@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.21)
 
 project(
     LibFire
-    VERSION 1.0.8.2
+    VERSION 1.0.8.3
     HOMEPAGE_URL https://github.com/fireundubh/LibFire
     LANGUAGES CXX
 )
@@ -23,7 +23,6 @@ set(headers
     src/Papyrus/ActorValueHelper.h
     src/Papyrus/PapyrusActor.h
     src/Papyrus/PapyrusArray.h
-    src/Papyrus/PapyrusExperiments.h
     src/Papyrus/PapyrusFaction.h
     src/Papyrus/PapyrusFormList.h
     src/Papyrus/PapyrusObjectREFR.h
@@ -41,7 +40,6 @@ set(sources
     src/Papyrus/ActorValueHelper.cpp
     src/Papyrus/PapyrusActor.cpp
     src/Papyrus/PapyrusArray.cpp
-    src/Papyrus/PapyrusExperiments.cpp
     src/Papyrus/PapyrusFaction.cpp
     src/Papyrus/PapyrusFormList.cpp
     src/Papyrus/PapyrusObjectREFR.cpp
@@ -167,13 +165,6 @@ target_include_directories(
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
         $<INSTALL_INTERFACE:src>
-)
-
-target_link_libraries(
-    ${PROJECT_NAME}
-    PUBLIC
-        spdlog::spdlog
-        fmt::fmt
 )
 
 target_link_options(

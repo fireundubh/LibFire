@@ -26,7 +26,7 @@ namespace PapyrusObjectREFR
 							vec.push_back(actor);
 						}
 					}
-					return true;
+					return RE::BSContainer::ForEachResult::kStop;
 				});
 			}
 			else {
@@ -39,7 +39,7 @@ namespace PapyrusObjectREFR
 							vec.push_back(actor);
 						}
 					}
-					return true;
+					return RE::BSContainer::ForEachResult::kStop;
 				});
 			}
 		}
@@ -84,7 +84,7 @@ namespace PapyrusObjectREFR
 						vec.push_back(actor);
 					}
 				}
-				return true;
+				return RE::BSContainer::ForEachResult::kStop;
 			});
 		}
 
@@ -126,7 +126,7 @@ namespace PapyrusObjectREFR
 							vec.push_back(actor);
 						}
 					}
-					return true;
+					return RE::BSContainer::ForEachResult::kStop;
 				});
 			} else {
 				bool codePath = true;
@@ -138,7 +138,7 @@ namespace PapyrusObjectREFR
 							vec.push_back(actor);
 						}
 					}
-					return true;
+					return RE::BSContainer::ForEachResult::kStop;
 				});
 			}
 		}
@@ -178,7 +178,7 @@ namespace PapyrusObjectREFR
 						vec.push_back(actor);
 					}
 				}
-				return true;
+				return RE::BSContainer::ForEachResult::kStop;
 			});
 		}
 
@@ -204,7 +204,7 @@ namespace PapyrusObjectREFR
 						vec.push_back(actor);
 					}
 				}
-				return true;
+				return RE::BSContainer::ForEachResult::kStop;
 			});
 		}
 
@@ -233,7 +233,7 @@ namespace PapyrusObjectREFR
 							vec.push_back(actor);
 						}
 					}
-					return true;
+					return RE::BSContainer::ForEachResult::kStop;
 				});
 			} else {
 				bool codePath = true;
@@ -245,7 +245,7 @@ namespace PapyrusObjectREFR
 							vec.push_back(actor);
 						}
 					}
-					return true;
+					return RE::BSContainer::ForEachResult::kStop;
 				});
 			}
 		}
@@ -270,7 +270,7 @@ namespace PapyrusObjectREFR
 				if (a_ref.As<RE::TESObjectREFR>() != a_origin && (a_ref.Is(formType) || base && base->Is(formType))) {
 					vec.push_back(&a_ref);
 				}
-				return true;
+				return RE::BSContainer::ForEachResult::kStop;
 			});
 		}
 
@@ -304,7 +304,7 @@ namespace PapyrusObjectREFR
 						}
 					}
 				}
-				return true;
+				return RE::BSContainer::ForEachResult::kStop;
 			});
 		}
 
@@ -336,7 +336,7 @@ namespace PapyrusObjectREFR
 							}
 						}
 					}
-					return true;
+					return RE::BSContainer::ForEachResult::kStop;
 				});
 			}
 		}
@@ -365,7 +365,7 @@ namespace PapyrusObjectREFR
 						}
 					}
 				}
-				return true;
+				return RE::BSContainer::ForEachResult::kStop;
 			});
 		}
 
@@ -378,7 +378,7 @@ namespace PapyrusObjectREFR
 
 		if (const auto TES = RE::TES::GetSingleton(); TES) {
 			if (const auto player = RE::PlayerCharacter::GetSingleton(); player) {
-				if (player->teammateCount > 0) {
+				if (player->GetPlayerRuntimeData().teammateCount > 0) {
 					const auto formType = RE::FormType::NPC;
 
 					TES->ForEachReferenceInRange(player, a_radius, [&](RE::TESObjectREFR& a_ref) {
@@ -390,7 +390,7 @@ namespace PapyrusObjectREFR
 								}
 							}
 						}
-						return true;
+						return RE::BSContainer::ForEachResult::kStop;
 					});
 				}
 			}
