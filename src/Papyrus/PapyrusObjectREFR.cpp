@@ -409,7 +409,7 @@ namespace PapyrusObjectREFR
 		if (const auto actor = a_ref->As<RE::Actor>(); actor) {
 			const auto actorValueId = RE::ActorValueList::GetSingleton()->LookupActorValueByName(a_actorValue);
 			const auto actorValue = static_cast<RE::ActorValue>(actorValueId);
-			return actor->GetPermanentActorValue(actorValue);
+			return actor->GetActorBase()->GetPermanentActorValue(actorValue);
 		}
 
 		return -1.0;
