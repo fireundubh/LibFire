@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.21)
 
 project(
     LibFire
-    VERSION 1.0.8.3
+    VERSION 1.0.8.2
     HOMEPAGE_URL https://github.com/fireundubh/LibFire
     LANGUAGES CXX
 )
